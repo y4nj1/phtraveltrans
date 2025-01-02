@@ -1,7 +1,16 @@
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QComboBox, QTextEdit, QVBoxLayout, QHBoxLayout, QMessageBox)
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 import sys
+from backend import translate_text, recognize_speech 
+
+# Language code mapping
+language_code_map = {
+    "English": "en",
+    "Tagalog": "tl",
+    "Cebuano": "ceb",
+    "Ilocano": "ilo"
+}
 
 class TextTranslateApp(QWidget):
     def __init__(self, mainMenuCallback):
@@ -24,20 +33,20 @@ class TextTranslateApp(QWidget):
         self.backButton.setFixedSize(40, 40)
         self.backButton.clicked.connect(self.goBack)
         
-        sourceLanguage = QComboBox(self)
-        sourceLanguage.addItems(["Select Language", "English", "Spanish", "French", "German"])
+        self.sourceLanguage = QComboBox(self)
+        self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
 
-        targetLanguage = QComboBox(self)
-        targetLanguage.addItems(["Select Language", "English", "Spanish", "French", "German"])
+        self.targetLanguage = QComboBox(self)
+        self.targetLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
 
         self.sourceText = QTextEdit(self)
         self.targetText = QTextEdit(self)
         self.targetText.setReadOnly(True)
 
         topBarLayout = QHBoxLayout()
-        topBarLayout.addWidget(sourceLanguage)
+        topBarLayout.addWidget(self.sourceLanguage)
         topBarLayout.addWidget(self.translateButton)
-        topBarLayout.addWidget(targetLanguage)
+        topBarLayout.addWidget(self.targetLanguage)
 
         textLayout = QHBoxLayout()
         textLayout.addWidget(self.sourceText)
@@ -47,10 +56,45 @@ class TextTranslateApp(QWidget):
         mainLayout.addLayout(topBarLayout)
         mainLayout.addLayout(textLayout)
         self.setLayout(mainLayout)
+        
+        self.translateButton.clicked.connect(self.translateButtonClicked)
+        
+    def translateButtonClicked(self):
+        src_lang_name = self.sourceLanguage.currentText()
+        tgt_lang_name = self.targetLanguage.currentText()
+
+        if src_lang_name == "Select Language" or tgt_lang_name == "Select Language":
+            QMessageBox.warning(self, "Error", "Please select valid languages.")
+            return
+
+        src_lang = language_code_map.get(src_lang_name)
+        tgt_lang = language_code_map.get(tgt_lang_name)
+
+        if not src_lang or not tgt_lang:
+            QMessageBox.warning(self, "Error", "Invalid language selection.")
+            return
+
+        source_text = self.sourceText.toPlainText()
+        translated_text = translate_text(source_text, src_lang, tgt_lang)
+        self.targetText.setText(translated_text)
 
     def goBack(self):
         self.mainMenuCallback()
         self.close()
+        
+class SpeechThread(QThread):
+    recognized = pyqtSignal(str)
+    translated = pyqtSignal(str)
+
+    def __init__(self, source_lang, target_lang):
+        super().__init__()
+        self.source_lang = source_lang
+        self.target_lang = target_lang
+
+    def run(self):
+        recognized, translated = recognize_speech(self.source_lang, self.target_lang)
+        self.recognized.emit(recognized)
+        self.translated.emit(translated)
 
 class VoiceTranslateApp(QWidget):
     def __init__(self, mainMenuCallback):
@@ -62,40 +106,33 @@ class VoiceTranslateApp(QWidget):
         self.setWindowTitle('Voice Translate Interface')
         self.setGeometry(100, 100, 800, 600)
 
-        # Layout
         mainLayout = QVBoxLayout()
 
         self.micButton = QPushButton(self)
-        self.micButton.setIcon(QIcon('mic_icon.png'))  # Replace with a valid microphone icon
-        self.micButton.setFixedSize(40, 40)
-        self.micButton.clicked.connect(self.showMicPopup)
+        self.micButton.setText("🎤 Start Mic")
+        self.micButton.setFixedSize(100, 40)
+        self.micButton.clicked.connect(self.startSpeechRecognition)
 
-        self.translateButton = QPushButton('Translate', self)
-        self.translateButton.setStyleSheet("font-size: 14px; padding: 5px;")
+        self.sourceLanguage = QComboBox(self)
+        self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
 
-        sourceLanguage = QComboBox(self)
-        sourceLanguage.addItems(["Select Language", "English", "Spanish", "French", "German"])
-
-        targetLanguage = QComboBox(self)
-        targetLanguage.addItems(["Select Language", "English", "Spanish", "French", "German"])
+        self.targetLanguage = QComboBox(self)
+        self.targetLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
 
         self.micSourceText = QTextEdit(self)
         self.micTargetText = QTextEdit(self)
         self.micTargetText.setReadOnly(True)
 
         topBarLayout = QHBoxLayout()
-        topBarLayout.addWidget(sourceLanguage)
+        topBarLayout.addWidget(self.sourceLanguage)
         topBarLayout.addWidget(self.micButton)
-        topBarLayout.addWidget(self.translateButton)
-        topBarLayout.addWidget(targetLanguage)
+        topBarLayout.addWidget(self.targetLanguage)
 
         micTextLayout = QHBoxLayout()
         micTextLayout.addWidget(self.micSourceText)
         micTextLayout.addWidget(self.micTargetText)
 
-        self.backButton = QPushButton(self)
-        self.backButton.setIcon(QIcon('back_icon.png'))  # Replace with a valid back icon
-        self.backButton.setFixedSize(40, 40)
+        self.backButton = QPushButton("⬅ Back")
         self.backButton.clicked.connect(self.goBack)
 
         mainLayout.addWidget(self.backButton, alignment=Qt.AlignLeft)
@@ -103,8 +140,31 @@ class VoiceTranslateApp(QWidget):
         mainLayout.addLayout(micTextLayout)
         self.setLayout(mainLayout)
 
-    def showMicPopup(self):
-        QMessageBox.information(self, "Microphone", "Microphone is now recording.")
+    def startSpeechRecognition(self):
+        src_lang_name = self.sourceLanguage.currentText().split(" - ")[0]
+        tgt_lang_name = self.targetLanguage.currentText().split(" - ")[0]
+
+        if src_lang_name == "Select Language" or tgt_lang_name == "Select Language":
+            QMessageBox.warning(self, "Error", "Please select valid languages.")
+            return
+        
+        src_lang = language_code_map.get(src_lang_name)
+        tgt_lang = language_code_map.get(tgt_lang_name)
+
+        if not src_lang or not tgt_lang:
+            QMessageBox.warning(self, "Error", "Invalid language selection.")
+            return
+
+        self.speechThread = SpeechThread(src_lang, tgt_lang)
+        self.speechThread.recognized.connect(self.displayRecognizedText)
+        self.speechThread.translated.connect(self.displayTranslatedText)
+        self.speechThread.start()
+
+    def displayRecognizedText(self, text):
+        self.micSourceText.setText(text)
+
+    def displayTranslatedText(self, text):
+        self.micTargetText.setText(text)
 
     def goBack(self):
         self.mainMenuCallback()

@@ -29,7 +29,7 @@ class TextTranslateApp(QWidget):
         self.translateButton.setStyleSheet("font-size: 14px; padding: 5px;")
 
         self.backButton = QPushButton(self)
-        self.backButton.setIcon(QIcon('back_icon.png'))  # Replace with a valid back icon
+        self.backButton.setIcon(QIcon('./assets/back.png'))  # Replace with a valid back icon
         self.backButton.setFixedSize(40, 40)
         self.backButton.clicked.connect(self.goBack)
         
@@ -109,8 +109,8 @@ class VoiceTranslateApp(QWidget):
         mainLayout = QVBoxLayout()
 
         self.micButton = QPushButton(self)
-        self.micButton.setText("🎤 Start Mic")
-        self.micButton.setFixedSize(100, 40)
+        self.micButton.setIcon(QIcon('./assets/mic.png'))
+        self.micButton.setFixedSize(40, 40)
         self.micButton.clicked.connect(self.startSpeechRecognition)
 
         self.sourceLanguage = QComboBox(self)
@@ -132,7 +132,9 @@ class VoiceTranslateApp(QWidget):
         micTextLayout.addWidget(self.micSourceText)
         micTextLayout.addWidget(self.micTargetText)
 
-        self.backButton = QPushButton("⬅ Back")
+        self.backButton = QPushButton(self)
+        self.backButton.setIcon(QIcon('./assets/back.png'))  # Replace with a valid back icon
+        self.backButton.setFixedSize(40, 40)
         self.backButton.clicked.connect(self.goBack)
 
         mainLayout.addWidget(self.backButton, alignment=Qt.AlignLeft)

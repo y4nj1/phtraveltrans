@@ -32,6 +32,11 @@ class TextTranslateApp(QWidget):
         self.backButton.setIcon(QIcon('back_icon.png'))  # Replace with a valid back icon
         self.backButton.setFixedSize(40, 40)
         self.backButton.clicked.connect(self.goBack)
+
+        self.clearButton = QPushButton('Clear', self)
+        self.clearButton.setStyleSheet("font-size: 14px; padding: 5px;")
+        self.clearButton.clicked.connect(self.clear)
+
         
         self.sourceLanguage = QComboBox(self)
         self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
@@ -46,6 +51,7 @@ class TextTranslateApp(QWidget):
         topBarLayout = QHBoxLayout()
         topBarLayout.addWidget(self.sourceLanguage)
         topBarLayout.addWidget(self.translateButton)
+        topBarLayout.addWidget(self.clearButton)
         topBarLayout.addWidget(self.targetLanguage)
 
         textLayout = QHBoxLayout()
@@ -77,6 +83,11 @@ class TextTranslateApp(QWidget):
         source_text = self.sourceText.toPlainText()
         translated_text = translate_text(source_text, src_lang, tgt_lang)
         self.targetText.setText(translated_text)
+
+    def clear(self):
+        self.sourceText.clear()
+        self.targetText.clear()
+
 
     def goBack(self):
         self.mainMenuCallback()

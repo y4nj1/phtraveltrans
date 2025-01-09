@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QComboBox, QTextEdit, QVBoxLayout, QHBoxLayout, QMessageBox)
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QComboBox, QTextEdit, QVBoxLayout, QHBoxLayout, QMessageBox, QDialog)
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
 import sys
 from backend import translate_text, recognize_speech 
 
@@ -82,9 +82,35 @@ class TextTranslateApp(QWidget):
         self.mainMenuCallback()
         self.close()
         
+class ListeningDialog(QDialog):
+    """Dialog to display real-time listening updates."""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Listening")
+        self.setModal(True)
+        self.setFixedSize(300, 100)
+
+        # Message Label
+        self.label = QLabel("Adjusting for ambient noise...", self)
+        self.label.setAlignment(Qt.AlignCenter)
+
+        # Layout
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.label)
+
+    def updateMessage(self, message):
+        """Update the dialog's message in real-time."""
+        self.label.setText(message)
+
+    def closeDialog(self):
+        """Close the dialog."""
+        self.close()
+        
 class SpeechThread(QThread):
+    """Thread for handling speech recognition and translation."""
     recognized = pyqtSignal(str)
     translated = pyqtSignal(str)
+    status_update = pyqtSignal(str)  # New signal to update the dialog message
 
     def __init__(self, source_lang, target_lang):
         super().__init__()
@@ -92,11 +118,23 @@ class SpeechThread(QThread):
         self.target_lang = target_lang
 
     def run(self):
+        # Simulate recognition phases
+        self.status_update.emit("Adjusting for ambient noise...")
+        self.msleep(2000)  # Simulated delay for noise adjustment
+        self.status_update.emit("Listening...")
+        self.msleep(3000)  # Simulated delay for noise adjustment
+        self.status_update.emit("You can speak now...")
+        
+        # Perform speech recognition and translation
         recognized, translated = recognize_speech(self.source_lang, self.target_lang)
+        
+        # Emit results
         self.recognized.emit(recognized)
         self.translated.emit(translated)
 
+
 class VoiceTranslateApp(QWidget):
+    """Main interface for voice translation."""
     def __init__(self, mainMenuCallback):
         super().__init__()
         self.mainMenuCallback = mainMenuCallback
@@ -143,13 +181,13 @@ class VoiceTranslateApp(QWidget):
         self.setLayout(mainLayout)
 
     def startSpeechRecognition(self):
-        src_lang_name = self.sourceLanguage.currentText().split(" - ")[0]
-        tgt_lang_name = self.targetLanguage.currentText().split(" - ")[0]
+        src_lang_name = self.sourceLanguage.currentText()
+        tgt_lang_name = self.targetLanguage.currentText()
 
         if src_lang_name == "Select Language" or tgt_lang_name == "Select Language":
             QMessageBox.warning(self, "Error", "Please select valid languages.")
             return
-        
+
         src_lang = language_code_map.get(src_lang_name)
         tgt_lang = language_code_map.get(tgt_lang_name)
 
@@ -157,9 +195,16 @@ class VoiceTranslateApp(QWidget):
             QMessageBox.warning(self, "Error", "Invalid language selection.")
             return
 
+        # Show the listening dialog
+        self.listeningDialog = ListeningDialog(self)
+        self.listeningDialog.show()
+
+        # Start the speech recognition thread
         self.speechThread = SpeechThread(src_lang, tgt_lang)
+        self.speechThread.status_update.connect(self.listeningDialog.updateMessage)
         self.speechThread.recognized.connect(self.displayRecognizedText)
         self.speechThread.translated.connect(self.displayTranslatedText)
+        self.speechThread.finished.connect(self.listeningDialog.closeDialog)  # Close dialog when done
         self.speechThread.start()
 
     def displayRecognizedText(self, text):

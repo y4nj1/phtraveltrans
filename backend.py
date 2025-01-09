@@ -1,112 +1,59 @@
 import speech_recognition as sr
 from googletrans import Translator
+import mysql.connector
 
 # Initialize recognizer
 recognizer = sr.Recognizer()
 translator = Translator()
 
-language_code_map = {
-    "English": "en",
-    "Tagalog": "tl",
-    "Cebuano": "ceb",
-    "Ilocano": "ilo"
-}
+def fetch_translation(source_text, source_lang, target_lang):
+    """Fetch translation from the database."""
+    try:
+        # Connect to the database
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root", 
+            password="pHtrans2025",  
+            database="translations_db"  
+        )
 
-# Dictionaries for manual translations
-translation_dict = {
-    ('en', 'tl'): {
-        "hello": "kamusta",
-        "goodbye": "paalam",
-        "thank you": "salamat",
-        "yes": "oo",
-        "no": "hindi",
-    },
-    ('tl', 'en'): {
-        "kamusta": "hello",
-        "paalam": "goodbye",
-        "salamat": "thank you",
-        "oo": "yes",
-        "hindi": "no",
-    },
-    ('en', 'ceb'): {
-        "hello": "kumusta",
-        "goodbye": "babay",
-        "thank you": "salamat",
-        "yes": "oo",
-        "no": "dili",
-    },
-    ('ceb', 'en'): {
-        "kumusta": "hello",
-        "babay": "goodbye",
-        "salamat": "thank you",
-        "oo": "yes",
-        "dili": "no",
-    },
-    ('en', 'ilo'): {
-        "hello": "nagkamusta",
-        "goodbye": "agyamanak",
-        "thank you": "agyaman",
-        "yes": "wen",
-        "no": "saan",
-    },
-    ('ilo', 'en'): {
-        "nagkamusta": "hello",
-        "agyamanak": "goodbye",
-        "agyaman": "thank you",
-        "wen": "yes",
-        "saan": "no",
-    },
-    ('tl', 'ceb'): {
-        "salamat": "salamat",
-        "oo": "oo",
-        "hindi": "dili",
-        "kamusta": "kumusta",
-    },
-    ('ceb', 'tl'): {
-        "salamat": "salamat",
-        "oo": "oo",
-        "dili": "hindi",
-        "kumusta": "kamusta",
-    },
-    ('tl', 'ilo'): {
-        "salamat": "agyaman",
-        "kamusta": "nagkamusta",
-        "hindi": "saan",
-        "oo": "wen",
-    },
-    ('ilo', 'tl'): {
-        "agyaman": "salamat",
-        "nagkamusta": "kamusta",
-        "saan": "hindi",
-        "wen": "oo",
-    },
-    ('ceb', 'ilo'): {
-        "salamat": "agyaman",
-        "kumusta": "nagkamusta",
-        "dili": "saan",
-        "oo": "wen",
-    },
-    ('ilo', 'ceb'): {
-        "agyaman": "salamat",
-        "nagkamusta": "kumusta",
-        "saan": "dili",
-        "wen": "oo",
-    },
-}
+        cursor = connection.cursor()
+        query = """
+            SELECT translated_text
+            FROM translations
+            WHERE source_language = %s AND target_language = %s AND source_text = %s
+        """
+        cursor.execute(query, (source_lang, target_lang, source_text.lower()))
+        result = cursor.fetchone()
 
-def manual_translate(text, src, dest):
-    """Manually translate text using predefined dictionaries."""
-    return translation_dict.get((src, dest), {}).get(text.lower(), text)
+        if result:
+            return result[0]  # Return the translated text
+        else:
+            return source_text  # Fallback to the original text if no translation found
+
+    except mysql.connector.Error as err:
+        print(f"Database Error: {err}")
+        return source_text
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
 
 def translate_text(source_text, source_lang, target_lang):
-    """Translate text between selected languages."""
-    if (source_lang, target_lang) in translation_dict:
-        # Use manual translation for predefined language pairs
-        return manual_translate(source_text, source_lang, target_lang)
-    else:
-        # Use Google Translate API for other translations
+    """Translate text using database first, fallback to Google Translate API."""
+    # First, try fetching translation from the database
+    translation = fetch_translation(source_text, source_lang, target_lang)
+    if translation != source_text:
+        return translation
+
+    # If not found in the database, use Google Translate API
+    try:
         translated = translator.translate(source_text, src=source_lang, dest=target_lang)
         return translated.text
+    except Exception as e:
+        print(f"Google Translate Error: {e}")
+        return source_text
 
 def recognize_speech(source_lang, target_lang):
     """Recognize speech from microphone and translate it."""

@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel, QComboBox, QTextEdit, QVBoxLayout, QHBoxLayout, QMessageBox, QDialog)
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
+from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtCore import Qt, QThread, pyqtSignal
 import sys
-from backend import translate_text, recognize_speech 
+from backend import translate_text, recognize_speech
 
 # Language code mapping
 language_code_map = {
@@ -20,17 +20,13 @@ class TextTranslateApp(QWidget):
 
     def initUI(self):
         self.setWindowTitle('Text Translate Interface')
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(50, 50, 1024, 600)
 
-        # Layout
         mainLayout = QVBoxLayout()
 
-        self.translateButton = QPushButton('Translate', self)
-        self.translateButton.setStyleSheet("font-size: 14px; padding: 5px;")
-
         self.backButton = QPushButton(self)
-        self.backButton.setIcon(QIcon('back_icon.png'))  # Replace with a valid back icon
-        self.backButton.setFixedSize(40, 40)
+        self.backButton.setIcon(QIcon('./assets/back.png'))
+        self.backButton.setFixedSize(50, 50)
         self.backButton.clicked.connect(self.goBack)
 
         self.clearButton = QPushButton('Clear', self)
@@ -39,20 +35,31 @@ class TextTranslateApp(QWidget):
 
         
         self.sourceLanguage = QComboBox(self)
+        self.sourceLanguage.setFixedSize(150, 40)
+        self.sourceLanguage.setStyleSheet("font-size: 14px;")
         self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
 
         self.targetLanguage = QComboBox(self)
+        self.targetLanguage.setFixedSize(150, 40)
+        self.targetLanguage.setStyleSheet("font-size: 14px;")
         self.targetLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
 
+        self.translateButton = QPushButton('Translate', self)
+        self.translateButton.setStyleSheet("font-size: 16px; padding: 8px;")
+        self.translateButton.setFixedSize(150, 40)
+
         self.sourceText = QTextEdit(self)
+        self.sourceText.setFont(QFont("Arial", 12))
+
         self.targetText = QTextEdit(self)
+        self.targetText.setFont(QFont("Arial", 12))
         self.targetText.setReadOnly(True)
 
         topBarLayout = QHBoxLayout()
-        topBarLayout.addWidget(self.sourceLanguage)
-        topBarLayout.addWidget(self.translateButton)
+        topBarLayout.addWidget(self.sourceLanguage, alignment=Qt.AlignLeft)
+        topBarLayout.addWidget(self.translateButton, alignment=Qt.AlignCenter)
         topBarLayout.addWidget(self.clearButton)
-        topBarLayout.addWidget(self.targetLanguage)
+        topBarLayout.addWidget(self.targetLanguage, alignment=Qt.AlignRight)
 
         textLayout = QHBoxLayout()
         textLayout.addWidget(self.sourceText)
@@ -62,9 +69,9 @@ class TextTranslateApp(QWidget):
         mainLayout.addLayout(topBarLayout)
         mainLayout.addLayout(textLayout)
         self.setLayout(mainLayout)
-        
+
         self.translateButton.clicked.connect(self.translateButtonClicked)
-        
+
     def translateButtonClicked(self):
         src_lang_name = self.sourceLanguage.currentText()
         tgt_lang_name = self.targetLanguage.currentText()
@@ -92,36 +99,30 @@ class TextTranslateApp(QWidget):
     def goBack(self):
         self.mainMenuCallback()
         self.close()
-        
+
 class ListeningDialog(QDialog):
-    """Dialog to display real-time listening updates."""
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Listening")
         self.setModal(True)
         self.setFixedSize(300, 100)
 
-        # Message Label
         self.label = QLabel("Adjusting for ambient noise...", self)
         self.label.setAlignment(Qt.AlignCenter)
 
-        # Layout
         layout = QVBoxLayout(self)
         layout.addWidget(self.label)
 
     def updateMessage(self, message):
-        """Update the dialog's message in real-time."""
         self.label.setText(message)
 
     def closeDialog(self):
-        """Close the dialog."""
         self.close()
-        
+
 class SpeechThread(QThread):
-    """Thread for handling speech recognition and translation."""
     recognized = pyqtSignal(str)
     translated = pyqtSignal(str)
-    status_update = pyqtSignal(str)  # New signal to update the dialog message
+    status_update = pyqtSignal(str)
 
     def __init__(self, source_lang, target_lang):
         super().__init__()
@@ -129,21 +130,16 @@ class SpeechThread(QThread):
         self.target_lang = target_lang
 
     def run(self):
-        # Simulate recognition phases
         self.status_update.emit("Adjusting for ambient noise...")
         self.msleep(2000)  # Simulated delay for noise adjustment
         self.status_update.emit("You can speak now...")
-        
-        # Perform speech recognition and translation
+
         recognized, translated = recognize_speech(self.source_lang, self.target_lang)
-        
-        # Emit results
+
         self.recognized.emit(recognized)
         self.translated.emit(translated)
 
-
 class VoiceTranslateApp(QWidget):
-    """Main interface for voice translation."""
     def __init__(self, mainMenuCallback):
         super().__init__()
         self.mainMenuCallback = mainMenuCallback
@@ -151,36 +147,45 @@ class VoiceTranslateApp(QWidget):
 
     def initUI(self):
         self.setWindowTitle('Voice Translate Interface')
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(50, 50, 1024, 600)
 
         mainLayout = QVBoxLayout()
 
-        self.micButton = QPushButton(self)
-        self.micButton.setText("🎤 Start Mic")
-        self.micButton.setFixedSize(100, 40)
-        self.micButton.clicked.connect(self.startSpeechRecognition)
+        self.backButton = QPushButton(self)
+        self.backButton.setIcon(QIcon('./assets/back.png'))
+        self.backButton.setFixedSize(50, 50)
+        self.backButton.clicked.connect(self.goBack)
 
         self.sourceLanguage = QComboBox(self)
+        self.sourceLanguage.setFixedSize(150, 40)
+        self.sourceLanguage.setStyleSheet("font-size: 14px;")
         self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
 
         self.targetLanguage = QComboBox(self)
+        self.targetLanguage.setFixedSize(150, 40)
+        self.targetLanguage.setStyleSheet("font-size: 14px;")
         self.targetLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
 
+        self.micButton = QPushButton(self)
+        self.micButton.setIcon(QIcon('./assets/mic.png'))
+        self.micButton.setFixedSize(50, 50)
+        self.micButton.clicked.connect(self.startSpeechRecognition)
+
         self.micSourceText = QTextEdit(self)
+        self.micSourceText.setFont(QFont("Arial", 12))
+
         self.micTargetText = QTextEdit(self)
+        self.micTargetText.setFont(QFont("Arial", 12))
         self.micTargetText.setReadOnly(True)
 
         topBarLayout = QHBoxLayout()
-        topBarLayout.addWidget(self.sourceLanguage)
-        topBarLayout.addWidget(self.micButton)
-        topBarLayout.addWidget(self.targetLanguage)
+        topBarLayout.addWidget(self.sourceLanguage, alignment=Qt.AlignLeft)
+        topBarLayout.addWidget(self.micButton, alignment=Qt.AlignCenter)
+        topBarLayout.addWidget(self.targetLanguage, alignment=Qt.AlignRight)
 
         micTextLayout = QHBoxLayout()
         micTextLayout.addWidget(self.micSourceText)
         micTextLayout.addWidget(self.micTargetText)
-
-        self.backButton = QPushButton("⬅ Back")
-        self.backButton.clicked.connect(self.goBack)
 
         mainLayout.addWidget(self.backButton, alignment=Qt.AlignLeft)
         mainLayout.addLayout(topBarLayout)
@@ -202,16 +207,14 @@ class VoiceTranslateApp(QWidget):
             QMessageBox.warning(self, "Error", "Invalid language selection.")
             return
 
-        # Show the listening dialog
         self.listeningDialog = ListeningDialog(self)
         self.listeningDialog.show()
 
-        # Start the speech recognition thread
         self.speechThread = SpeechThread(src_lang, tgt_lang)
         self.speechThread.status_update.connect(self.listeningDialog.updateMessage)
         self.speechThread.recognized.connect(self.displayRecognizedText)
         self.speechThread.translated.connect(self.displayTranslatedText)
-        self.speechThread.finished.connect(self.listeningDialog.closeDialog)  # Close dialog when done
+        self.speechThread.finished.connect(self.listeningDialog.closeDialog)
         self.speechThread.start()
 
     def displayRecognizedText(self, text):
@@ -231,17 +234,18 @@ class MainMenuApp(QWidget):
 
     def initUI(self):
         self.setWindowTitle('Main Menu Interface')
-        self.setGeometry(100, 100, 800, 600)
+        self.setGeometry(50, 50, 1024, 600)
 
-        # Layout
         mainLayout = QVBoxLayout()
 
         self.textButton = QPushButton('Text Translate', self)
-        self.textButton.setStyleSheet("background-color: #d1f5d3; font-size: 18px; padding: 10px;")
+        self.textButton.setStyleSheet("background-color: #d1f5d3; font-size: 20px; padding: 12px;")
+        self.textButton.setFixedSize(600, 60)
         self.textButton.clicked.connect(self.openTextTranslate)
 
         self.voiceButton = QPushButton('Voice Translate', self)
-        self.voiceButton.setStyleSheet("background-color: #b0b3ff; font-size: 18px; padding: 10px;")
+        self.voiceButton.setStyleSheet("background-color: #b0b3ff; font-size: 20px; padding: 12px;")
+        self.voiceButton.setFixedSize(600, 60)
         self.voiceButton.clicked.connect(self.openVoiceTranslate)
 
         buttonLayout = QHBoxLayout()
@@ -266,8 +270,6 @@ class MainMenuApp(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
     ex = MainMenuApp()
     ex.show()
-
     sys.exit(app.exec_())

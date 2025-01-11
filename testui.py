@@ -121,8 +121,6 @@ class SpeechThread(QThread):
         # Simulate recognition phases
         self.status_update.emit("Adjusting for ambient noise...")
         self.msleep(2000)  # Simulated delay for noise adjustment
-        self.status_update.emit("Listening...")
-        self.msleep(3000)  # Simulated delay for noise adjustment
         self.status_update.emit("You can speak now...")
         
         # Perform speech recognition and translation

@@ -10,138 +10,405 @@ CREATE TABLE translations (
     translated_text VARCHAR(255) NOT NULL
 );
 
-INSERT INTO translations (source_language, target_language, source_text, translated_text)
-VALUES
-    -- English to Tagalog
-    ('en', 'tl', 'How far is it?', 'Gaano pa kalayo?'),
-    ('en', 'tl', 'Where is the nearest [hotel/restaurant/bathroom]?', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?'),
-    ('en', 'tl', 'Do you have any recommendations for a good place to visit?', 'May mairerekomenda ka bang magandang pasyalan?'),
-    ('en', 'tl', 'How far is it from here?', 'Gaano kalayo mula dito?'),
-    ('en', 'tl', 'I’m lost.', 'Naliligaw ako.'),
-    ('en', 'tl', 'Can you help me?', 'Puwede mo ba akong tulungan?'),
-    ('en', 'tl', 'Can you give me directions to [place]?', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?'),
-    ('en', 'tl', 'Thank you very much', 'Maraming Salamat'),
-    ('en', 'tl', 'Good morning', 'Magandang Umaga'),
+-- English to Tagalog
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'How far is it?', 'Gaano pa kalayo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Where is the nearest [hotel/restaurant/bathroom]?', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Do you have any recommendations for a good place to visit?', 'May mairerekomenda ka bang magandang pasyalan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'How far is it from here?', 'Gaano kalayo mula dito?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'I’m lost. ', 'Naliligaw ako. ');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Can you help me?', 'Puwede mo ba akong tulungan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Can you give me directions to [place]?', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Thank you very much', 'Maraming Salamat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Good morning', 'Magandang Umaga');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Good Afternoon', 'Magandang Hapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Good evening', 'Magandang Gabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'What is your name?', 'Ano ang pangalan mo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Welcome', 'Mabuhay');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'How are you', 'Kamusta');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'I’m fine', 'Ayos lang');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'No', 'Hindi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Yes', 'Oo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'I dont know', 'Hindi ko alam / Ewan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Goodbye', 'Paalam');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Sorry', 'Paumanhin');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Excuse me', 'Padaan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Please', 'Pakiusap');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Today', 'Ngayon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Tomorrow', 'Bukas');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Yesterday', 'Kahapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Friend', 'Kaibigan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Eat', 'Kumain');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Drink', 'Uminom');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Hour', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'Minute', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'tl', 'I`m ', 'Ako si');
 
-    -- Tagalog to English
-    ('tl', 'en', 'Gaano pa kalayo?', 'How far is it?'),
-    ('tl', 'en', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?', 'Where is the nearest [hotel/restaurant/bathroom]?'),
-    ('tl', 'en', 'May mairerekomenda ka bang magandang pasyalan?', 'Do you have any recommendations for a good place to visit?'),
-    ('tl', 'en', 'Gaano kalayo mula dito?', 'How far is it from here?'),
-    ('tl', 'en', 'Naliligaw ako.', 'I’m lost.'),
-    ('tl', 'en', 'Puwede mo ba akong tulungan?', 'Can you help me?'),
-    ('tl', 'en', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?', 'Can you give me directions to [place]?'),
-    ('tl', 'en', 'Maraming Salamat', 'Thank you very much'),
-    ('tl', 'en', 'Magandang Umaga', 'Good morning'),
+-- Tagalog to English
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Gaano pa kalayo?', 'How far is it?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?', 'Where is the nearest [hotel/restaurant/bathroom]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'May mairerekomenda ka bang magandang pasyalan?', 'Do you have any recommendations for a good place to visit?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Gaano kalayo mula dito?', 'How far is it from here?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Naliligaw ako. ', 'I’m lost. ');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Puwede mo ba akong tulungan?', 'Can you help me?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?', 'Can you give me directions to [place]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Maraming Salamat', 'Thank you very much');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Magandang Umaga', 'Good morning');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Magandang Hapon', 'Good Afternoon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Magandang Gabi', 'Good evening');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Ano ang pangalan mo?', 'What is your name?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Mabuhay', 'Welcome');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Kamusta', 'How are you');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Ayos lang', 'I’m fine');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Hindi', 'No');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Oo', 'Yes');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Hindi ko alam / Ewan', 'I dont know');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Paalam', 'Goodbye');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Paumanhin', 'Sorry');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Padaan', 'Excuse me');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Pakiusap', 'Please');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Ngayon', 'Today');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Bukas', 'Tomorrow');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Kahapon', 'Yesterday');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Kaibigan', 'Friend');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Kumain', 'Eat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Uminom', 'Drink');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Oras', 'Hour');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Minuto', 'Minute');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'en', 'Ako si', 'I`m ');
 
-    -- English to Ilokano
-    ('en', 'ilo', 'How far is it?', 'Kasano pay ti kaadayo na?'),
-    ('en', 'ilo', 'Where is the nearest [hotel/restaurant/bathroom]?', 'Sadino ti ayan ti kaasitgan nga [hotel/restawran/banyo]?'),
-    ('en', 'ilo', 'Do you have any recommendations for a good place to visit?', 'Mabalin kadi nga irekomendayo ti aniaman a nasayaat a lugar a pagpasyaran?'),
-    ('en', 'ilo', 'How far is it from here?', 'Kasano ti kaadayo na manipud ditoy?'),
-    ('en', 'ilo', 'I’m lost.', 'Nayaw-awanak.'),
-    ('en', 'ilo', 'Can you help me?', 'Mabalin kadi a tulungannak?'),
-    ('en', 'ilo', 'Can you give me directions to [place]?', 'Mabalin kadi nga ikkannak iti direksiyon nga agturong iti [place]?'),
-    ('en', 'ilo', 'Thank you very much', 'Agyaman ak la unay'),
-    ('en', 'ilo', 'Good morning', 'Naimbag a bigat'),
+-- English to Ilokano
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'How far is it?', 'Mano ti layo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Where is the nearest [hotel/restaurant/bathroom]?', 'Ayanna ti kasinsin nga [hotel/restawran/CR]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Do you have any recommendations for a good place to visit?', 'Adda kadi ti suhesionmo para iti nasayaat nga lugar a bisitaan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'How far is it from here?', 'Mano ti layo manipud dita?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'I’m lost. ', 'Nawawala ak.');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Can you help me?', 'Makatulong ka kadi?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Can you give me directions to [place]?', 'Mabalin mo kadi nga ited ti direksyon iti [lugar]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Thank you very much', 'Agyamanak unay');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Good morning', 'Naimbag a bigat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Good Afternoon', 'Naimbag a malem');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Good evening', 'Naimbag a rabii');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'What is your name?', 'Ania ti nagan mo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Welcome', 'Agyamanak ti panang-abot');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'How are you', 'Kamusta kan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'I’m fine', 'Mayat met');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'No', 'saan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Yes', 'wen');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'I dont know', 'diak ammo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Goodbye', 'agpakadan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Sorry', 'Pasensya');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Excuse me', 'dumalanak man');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Please', 'maidawat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Today', 'Ita nga aldaw');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Tomorrow', 'inton bigat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Yesterday', 'idi kalman');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Friend', 'Gayyem');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Eat', 'Mangan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Drink', 'Inumen');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Hour', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'Minute', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ilo', 'I`m ', 'Siak ni');
 
-    -- Ilokano to English
-    ('ilo', 'en', 'Kasano pay ti kaadayo na?', 'How far is it?'),
-    ('ilo', 'en', 'Sadino ti ayan ti kaasitgan nga [hotel/restawran/banyo]?', 'Where is the nearest [hotel/restaurant/bathroom]?'),
-    ('ilo', 'en', 'Mabalin kadi nga irekomendayo ti aniaman a nasayaat a lugar a pagpasyaran?', 'Do you have any recommendations for a good place to visit?'),
-    ('ilo', 'en', 'Kasano ti kaadayo na manipud ditoy?', 'How far is it from here?'),
-    ('ilo', 'en', 'Nayaw-awanak.', 'I’m lost.'),
-    ('ilo', 'en', 'Mabalin kadi a tulungannak?', 'Can you help me?'),
-    ('ilo', 'en', 'Mabalin kadi nga ikkannak iti direksiyon nga agturong iti [place]?', 'Can you give me directions to [place]?'),
-    ('ilo', 'en', 'Agyaman ak la unay', 'Thank you very much'),
-    ('ilo', 'en', 'Naimbag a bigat', 'Good morning'),
+-- Ilokano to English
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Mano ti layo?', 'How far is it?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Ayanna ti kasinsin nga [hotel/restawran/CR]?', 'Where is the nearest [hotel/restaurant/bathroom]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Adda kadi ti suhesionmo para iti nasayaat nga lugar a bisitaan?', 'Do you have any recommendations for a good place to visit?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Mano ti layo manipud dita?', 'How far is it from here?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Nawawala ak.', 'I’m lost. ');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Makatulong ka kadi?', 'Can you help me?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Mabalin mo kadi nga ited ti direksyon iti [lugar]?', 'Can you give me directions to [place]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Agyamanak unay', 'Thank you very much');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Naimbag a bigat', 'Good morning');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Naimbag a malem', 'Good Afternoon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Naimbag a rabii', 'Good evening');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Ania ti nagan mo?', 'What is your name?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Agyamanak ti panang-abot', 'Welcome');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Kamusta kan', 'How are you');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Mayat met', 'I’m fine');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'saan', 'No');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'wen', 'Yes');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'diak ammo', 'I dont know');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'agpakadan', 'Goodbye');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Pasensya', 'Sorry');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'dumalanak man', 'Excuse me');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'maidawat', 'Please');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Ita nga aldaw', 'Today');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'inton bigat', 'Tomorrow');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'idi kalman', 'Yesterday');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Gayyem', 'Friend');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Mangan', 'Eat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Inumen', 'Drink');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Oras', 'Hour');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Minuto', 'Minute');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'en', 'Siak ni', 'I`m ');
 
-    -- English to Cebuano
-    ('en', 'ceb', 'How far is it?', 'Paywan pa bala karayo?'),
-    ('en', 'ceb', 'Where is the nearest [hotel/restaurant/bathroom]?', 'Sadin ang pinaka marapit nga [Hotel/restaurant/Rigya]?'),
-    ('en', 'ceb', 'Do you have any recommendations for a good place to visit?', 'Ano bala mong ma Rekomenda nga Lugar nga manamit anayanan?'),
-    ('en', 'ceb', 'How far is it from here?', 'Paywan karayo alin digya payan duto?'),
-    ('en', 'ceb', 'I’m lost.', 'Nagtalang ako.'),
-    ('en', 'ceb', 'Can you help me?', 'Pwede mo ako buligan?'),
-    ('en', 'ceb', 'Can you give me directions to [place]?', 'Pwede mo bala itudlo ang Dalan payan sa lugar ngato?'),
-    ('en', 'ceb', 'Thank you very much', 'Duro duro gid nga salamat'),
-    ('en', 'ceb', 'Good morning', 'Mayad nga aga Kanindo'),
+-- English to Cebuano
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'How far is it?', 'Asa na, layo pa?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Where is the nearest [hotel/restaurant/bathroom]?', 'Asa ang pinakadool nga [hotel/restawran/CR]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Do you have any recommendations for a good place to visit?', 'Aduna kay mga rekomendasyon sa nindot nga lugar nga bisitahan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'How far is it from here?', 'Unsa ka layo gikan diri?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'I’m lost. ', 'Naligaw ko.');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Can you help me?', 'Pwede ko nimo tabangan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Can you give me directions to [place]?', 'Pwede nimo ako hatagan og direksyon padulong sa [lugar]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Thank you very much', 'Daghang salamat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Good morning', 'Maayong buntag');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Good Afternoon', 'Maayong hapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Good evening', 'Maayong gabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'What is your name?', 'Unsa imong pangalan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Welcome', 'Malipayong pag-abot');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'How are you', 'Kumusta ka?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'I’m fine', 'Okay ra ko');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'No', 'Dili');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Yes', 'Oo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'I dont know', 'Wala ko kabalo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Goodbye', 'Paalam');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Sorry', 'Pasayloa ko');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Excuse me', 'Excuse me');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Please', 'Palihug');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Today', 'Karong adlawa');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Tomorrow', 'Ugma');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Yesterday', 'Kagabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Friend', 'Higala');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Eat', 'Kaon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Drink', 'Imnon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Hour', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'Minute', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('en', 'ceb', 'I`m ', 'Ako');
 
-    -- Cebuano to English
-    ('ceb', 'en', 'Paywan pa bala karayo?', 'How far is it?'),
-    ('ceb', 'en', 'Sadin ang pinaka marapit nga [Hotel/restaurant/Rigya]?', 'Where is the nearest [hotel/restaurant/bathroom]?'),
-    ('ceb', 'en', 'Ano bala mong ma Rekomenda nga Lugar nga manamit anayanan?', 'Do you have any recommendations for a good place to visit?'),
-    ('ceb', 'en', 'Paywan karayo alin digya payan duto?', 'How far is it from here?'),
-    ('ceb', 'en', 'Nagtalang ako.', 'I’m lost.'),
-    ('ceb', 'en', 'Pwede mo ako buligan?', 'Can you help me?'),
-    ('ceb', 'en', 'Pwede mo bala itudlo ang Dalan payan sa lugar ngato?', 'Can you give me directions to [place]?'),
-    ('ceb', 'en', 'Duro duro gid nga salamat', 'Thank you very much'),
-    ('ceb', 'en', 'Mayad nga aga Kanindo', 'Good morning'),
+-- Cebuano to English
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Asa na, layo pa?', 'How far is it?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Asa ang pinakadool nga [hotel/restawran/CR]?', 'Where is the nearest [hotel/restaurant/bathroom]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Aduna kay mga rekomendasyon sa nindot nga lugar nga bisitahan?', 'Do you have any recommendations for a good place to visit?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Unsa ka layo gikan diri?', 'How far is it from here?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Naligaw ko.', 'I’m lost. ');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Pwede ko nimo tabangan?', 'Can you help me?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Pwede nimo ako hatagan og direksyon padulong sa [lugar]?', 'Can you give me directions to [place]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Daghang salamat', 'Thank you very much');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Maayong buntag', 'Good morning');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Maayong hapon', 'Good Afternoon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Maayong gabi', 'Good evening');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Unsa imong pangalan?', 'What is your name?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Malipayong pag-abot', 'Welcome');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Kumusta ka?', 'How are you');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Okay ra ko', 'I’m fine');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Dili', 'No');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Oo', 'Yes');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Wala ko kabalo', 'I dont know');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Paalam', 'Goodbye');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Pasayloa ko', 'Sorry');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Excuse me', 'Excuse me');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Palihug', 'Please');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Karong adlawa', 'Today');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Ugma', 'Tomorrow');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Kagabi', 'Yesterday');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Higala', 'Friend');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Kaon', 'Eat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Imnon', 'Drink');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Oras', 'Hour');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Minuto', 'Minute');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'en', 'Ako', 'I`m ');
 
-    -- Tagalog to Ilokano
-    ('tl', 'ilo', 'Gaano pa kalayo?', 'Kasano pay ti kaadayo na?'),
-    ('tl', 'ilo', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?', 'Sadino ti ayan ti kaasitgan nga [hotel/restawran/banyo]?'),
-    ('tl', 'ilo', 'May mairerekomenda ka bang magandang pasyalan?', 'Mabalin kadi nga irekomendayo ti aniaman a nasayaat a lugar a pagpasyaran?'),
-    ('tl', 'ilo', 'Gaano kalayo mula dito?', 'Kasano ti kaadayo na manipud ditoy?'),
-    ('tl', 'ilo', 'Naliligaw ako.', 'Nayaw-awanak.'),
-    ('tl', 'ilo', 'Puwede mo ba akong tulungan?', 'Mabalin kadi a tulungannak?'),
-    ('tl', 'ilo', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?', 'Mabalin kadi nga ikkannak iti direksiyon nga agturong iti [place]?'),
-    ('tl', 'ilo', 'Maraming Salamat', 'Agyaman ak la unay'),
-    ('tl', 'ilo', 'Magandang Umaga', 'Naimbag a bigat'),
+-- Tagalog to Ilokano
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Gaano pa kalayo?', 'Mano ti layo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?', 'Ayanna ti kasinsin nga [hotel/restawran/CR]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'May mairerekomenda ka bang magandang pasyalan?', 'Adda kadi ti suhesionmo para iti nasayaat nga lugar a bisitaan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Gaano kalayo mula dito?', 'Mano ti layo manipud dita?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Naliligaw ako. ', 'Nawawala ak.');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Puwede mo ba akong tulungan?', 'Makatulong ka kadi?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?', 'Mabalin mo kadi nga ited ti direksyon iti [lugar]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Maraming Salamat', 'Agyamanak unay');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Magandang Umaga', 'Naimbag a bigat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Magandang Hapon', 'Naimbag a malem');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Magandang Gabi', 'Naimbag a rabii');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Ano ang pangalan mo?', 'Ania ti nagan mo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Mabuhay', 'Agyamanak ti panang-abot');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Kamusta', 'Kamusta kan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Ayos lang', 'Mayat met');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Hindi', 'saan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Oo', 'wen');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Hindi ko alam / Ewan', 'diak ammo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Paalam', 'agpakadan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Paumanhin', 'Pasensya');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Padaan', 'dumalanak man');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Pakiusap', 'maidawat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Ngayon', 'Ita nga aldaw');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Bukas', 'inton bigat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Kahapon', 'idi kalman');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Kaibigan', 'Gayyem');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Kumain', 'Mangan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Uminom', 'Inumen');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Oras', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Minuto', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ilo', 'Ako si', 'Siak ni');
 
-    -- Ilokano to Tagalog
-    ('ilo', 'tl', 'Kasano pay ti kaadayo na?', 'Gaano pa kalayo?'),
-    ('ilo', 'tl', 'Sadino ti ayan ti kaasitgan nga [hotel/restawran/banyo]?', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?'),
-    ('ilo', 'tl', 'Mabalin kadi nga irekomendayo ti aniaman a nasayaat a lugar a pagpasyaran?', 'May mairerekomenda ka bang magandang pasyalan?'),
-    ('ilo', 'tl', 'Kasano ti kaadayo na manipud ditoy?', 'Gaano kalayo mula dito?'),
-    ('ilo', 'tl', 'Nayaw-awanak.', 'Naliligaw ako.'),
-    ('ilo', 'tl', 'Mabalin kadi a tulungannak?', 'Puwede mo ba akong tulungan?'),
-    ('ilo', 'tl', 'Mabalin kadi nga ikkannak iti direksiyon nga agturong iti [place]?', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?'),
-    ('ilo', 'tl', 'Agyaman ak la unay', 'Maraming Salamat'),
-    ('ilo', 'tl', 'Naimbag a bigat', 'Magandang Umaga'),
+-- Ilokano to Tagalog
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Mano ti layo?', 'Gaano pa kalayo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Ayanna ti kasinsin nga [hotel/restawran/CR]?', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Adda kadi ti suhesionmo para iti nasayaat nga lugar a bisitaan?', 'May mairerekomenda ka bang magandang pasyalan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Mano ti layo manipud dita?', 'Gaano kalayo mula dito?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Nawawala ak.', 'Naliligaw ako. ');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Makatulong ka kadi?', 'Puwede mo ba akong tulungan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Mabalin mo kadi nga ited ti direksyon iti [lugar]?', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Agyamanak unay', 'Maraming Salamat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Naimbag a bigat', 'Magandang Umaga');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Naimbag a malem', 'Magandang Hapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Naimbag a rabii', 'Magandang Gabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Ania ti nagan mo?', 'Ano ang pangalan mo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Agyamanak ti panang-abot', 'Mabuhay');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Kamusta kan', 'Kamusta');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Mayat met', 'Ayos lang');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'saan', 'Hindi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'wen', 'Oo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'diak ammo', 'Hindi ko alam / Ewan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'agpakadan', 'Paalam');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Pasensya', 'Paumanhin');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'dumalanak man', 'Padaan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'maidawat', 'Pakiusap');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Ita nga aldaw', 'Ngayon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'inton bigat', 'Bukas');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'idi kalman', 'Kahapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Gayyem', 'Kaibigan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Mangan', 'Kumain');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Inumen', 'Uminom');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Oras', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Minuto', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'tl', 'Siak ni', 'Ako si');
 
-    -- Tagalog to Cebuano
-    ('tl', 'ceb', 'Gaano pa kalayo?', 'Paywan pa bala karayo?'),
-    ('tl', 'ceb', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?', 'Sadin ang pinaka marapit nga [Hotel/restaurant/Rigya]?'),
-    ('tl', 'ceb', 'May mairerekomenda ka bang magandang pasyalan?', 'Ano bala mong ma Rekomenda nga Lugar nga manamit anayanan?'),
-    ('tl', 'ceb', 'Gaano kalayo mula dito?', 'Paywan karayo alin digya payan duto?'),
-    ('tl', 'ceb', 'Naliligaw ako.', 'Nagtalang ako.'),
-    ('tl', 'ceb', 'Puwede mo ba akong tulungan?', 'Pwede mo ako buligan?'),
-    ('tl', 'ceb', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?', 'Pwede mo bala itudlo ang Dalan payan sa lugar ngato?'),
-    ('tl', 'ceb', 'Maraming Salamat', 'Duro duro gid nga salamat'),
-    ('tl', 'ceb', 'Magandang Umaga', 'Mayad nga aga Kanindo'),
+-- Tagalog to Cebuano
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Gaano pa kalayo?', 'Asa na, layo pa?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?', 'Asa ang pinakadool nga [hotel/restawran/CR]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'May mairerekomenda ka bang magandang pasyalan?', 'Aduna kay mga rekomendasyon sa nindot nga lugar nga bisitahan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Gaano kalayo mula dito?', 'Unsa ka layo gikan diri?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Naliligaw ako. ', 'Naligaw ko.');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Puwede mo ba akong tulungan?', 'Pwede ko nimo tabangan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?', 'Pwede nimo ako hatagan og direksyon padulong sa [lugar]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Maraming Salamat', 'Daghang salamat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Magandang Umaga', 'Maayong buntag');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Magandang Hapon', 'Maayong hapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Magandang Gabi', 'Maayong gabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Ano ang pangalan mo?', 'Unsa imong pangalan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Mabuhay', 'Malipayong pag-abot');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Kamusta', 'Kumusta ka?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Ayos lang', 'Okay ra ko');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Hindi', 'Dili');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Oo', 'Oo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Hindi ko alam / Ewan', 'Wala ko kabalo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Paalam', 'Paalam');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Paumanhin', 'Pasayloa ko');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Padaan', 'Excuse me');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Pakiusap', 'Palihug');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Ngayon', 'Karong adlawa');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Bukas', 'Ugma');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Kahapon', 'Kagabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Kaibigan', 'Higala');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Kumain', 'Kaon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Uminom', 'Imnon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Oras', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Minuto', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('tl', 'ceb', 'Ako si', 'Ako');
 
-    -- Cebuano to Tagalog
-    ('ceb', 'tl', 'Paywan pa bala karayo?', 'Gaano pa kalayo?'),
-    ('ceb', 'tl', 'Sadin ang pinaka marapit nga [Hotel/restaurant/Rigya]?', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?'),
-    ('ceb', 'tl', 'Ano bala mong ma Rekomenda nga Lugar nga manamit anayanan?', 'May mairerekomenda ka bang magandang pasyalan?'),
-    ('ceb', 'tl', 'Paywan karayo alin digya payan duto?', 'Gaano kalayo mula dito?'),
-    ('ceb', 'tl', 'Nagtalang ako.', 'Naliligaw ako.'),
-    ('ceb', 'tl', 'Pwede mo ako buligan?', 'Puwede mo ba akong tulungan?'),
-    ('ceb', 'tl', 'Pwede mo bala itudlo ang Dalan payan sa lugar ngato?', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?'),
-    ('ceb', 'tl', 'Duro duro gid nga salamat', 'Maraming Salamat'),
-    ('ceb', 'tl', 'Mayad nga aga Kanindo', 'Magandang Umaga'),
+-- Cebuano to Tagalog
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Asa na, layo pa?', 'Gaano pa kalayo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Asa ang pinakadool nga [hotel/restawran/CR]?', 'Saan ang pinakamalapit na [hotel/restawran/banyo]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Aduna kay mga rekomendasyon sa nindot nga lugar nga bisitahan?', 'May mairerekomenda ka bang magandang pasyalan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Unsa ka layo gikan diri?', 'Gaano kalayo mula dito?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Naligaw ko.', 'Naliligaw ako. ');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Pwede ko nimo tabangan?', 'Puwede mo ba akong tulungan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Pwede nimo ako hatagan og direksyon padulong sa [lugar]?', 'Puwede mo ba akong bigyan ng direksyon papunta sa [place]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Daghang salamat', 'Maraming Salamat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Maayong buntag', 'Magandang Umaga');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Maayong hapon', 'Magandang Hapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Maayong gabi', 'Magandang Gabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Unsa imong pangalan?', 'Ano ang pangalan mo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Malipayong pag-abot', 'Mabuhay');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Kumusta ka?', 'Kamusta');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Okay ra ko', 'Ayos lang');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Dili', 'Hindi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Oo', 'Oo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Wala ko kabalo', 'Hindi ko alam / Ewan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Paalam', 'Paalam');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Pasayloa ko', 'Paumanhin');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Excuse me', 'Padaan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Palihug', 'Pakiusap');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Karong adlawa', 'Ngayon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Ugma', 'Bukas');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Kagabi', 'Kahapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Higala', 'Kaibigan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Kaon', 'Kumain');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Imnon', 'Uminom');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Oras', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Minuto', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'tl', 'Ako', 'Ako si');
 
-	-- Cebuano to Ilokano
-    ('ceb', 'ilo', 'Paywan pa bala karayo?', 'Kasano pay ti kaadayo na?'),
-    ('ceb', 'ilo', 'Sadin ang pinaka marapit nga [Hotel/restaurant/Rigya]?', 'Sadino ti ayan ti kaasitgan nga [hotel/restawran/banyo]?'),
-    ('ceb', 'ilo', 'Ano bala mong ma Rekomenda nga Lugar nga manamit anayanan?', 'Mabalin kadi nga irekomendayo ti aniaman a nasayaat a lugar a pagpasyaran?'),
-    ('ceb', 'ilo', 'Paywan karayo alin digya payan duto?', 'Kasano ti kaadayo na manipud ditoy?'),
-    ('ceb', 'ilo', 'Nagtalang ako.', 'Nayaw-awanak.'),
-    ('ceb', 'ilo', 'Pwede mo ako buligan?', 'Mabalin kadi a tulungannak?'),
-    ('ceb', 'ilo', 'Pwede mo bala itudlo ang Dalan payan sa lugar ngato?', 'Mabalin kadi nga ikkannak iti direksiyon nga agturong iti [place]?'),
-    ('ceb', 'ilo', 'Duro duro gid nga salamat', 'Agyaman ak la unay'),
-    ('ceb', 'ilo', 'Mayad nga aga Kanindo', 'Naimbag a bigat'),
-    
-	-- Ilokano to Cebuano
-    ('ilo', 'ceb', 'Kasano pay ti kaadayo na?', 'Paywan pa bala karayo?'),
-    ('ilo', 'ceb', 'Sadino ti ayan ti kaasitgan nga [hotel/restawran/banyo]?', 'Sadin ang pinaka marapit nga [Hotel/restaurant/Rigya]?'),
-    ('ilo', 'ceb', 'Mabalin kadi nga irekomendayo ti aniaman a nasayaat a lugar a pagpasyaran?', 'Ano bala mong ma Rekomenda nga Lugar nga manamit anayanan?'),
-    ('ilo', 'ceb', 'Kasano ti kaadayo na manipud ditoy?', 'Paywan karayo alin digya payan duto?'),
-    ('ilo', 'ceb', 'Nayaw-awanak.', 'Nagtalang ako.'),
-    ('ilo', 'ceb', 'Mabalin kadi a tulungannak?', 'Pwede mo ako buligan?'),
-    ('ilo', 'ceb', 'Mabalin kadi nga ikkannak iti direksiyon nga agturong iti [place]?', 'Pwede mo bala itudlo ang Dalan payan sa lugar ngato?'),
-    ('ilo', 'ceb', 'Agyaman ak la unay', 'Duro duro gid nga salamat'),
-    ('ilo', 'ceb', 'Naimbag a bigat', 'Mayad nga aga Kanindo');
-    
+-- Cebuano to Ilokano
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Asa na, layo pa?', 'Mano ti layo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Asa ang pinakadool nga [hotel/restawran/CR]?', 'Ayanna ti kasinsin nga [hotel/restawran/CR]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Aduna kay mga rekomendasyon sa nindot nga lugar nga bisitahan?', 'Adda kadi ti suhesionmo para iti nasayaat nga lugar a bisitaan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Unsa ka layo gikan diri?', 'Mano ti layo manipud dita?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Naligaw ko.', 'Nawawala ak.');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Pwede ko nimo tabangan?', 'Makatulong ka kadi?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Pwede nimo ako hatagan og direksyon padulong sa [lugar]?', 'Mabalin mo kadi nga ited ti direksyon iti [lugar]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Daghang salamat', 'Agyamanak unay');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Maayong buntag', 'Naimbag a bigat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Maayong hapon', 'Naimbag a malem');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Maayong gabi', 'Naimbag a rabii');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Unsa imong pangalan?', 'Ania ti nagan mo?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Malipayong pag-abot', 'Agyamanak ti panang-abot');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Kumusta ka?', 'Kamusta kan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Okay ra ko', 'Mayat met');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Dili', 'saan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Oo', 'wen');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Wala ko kabalo', 'diak ammo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Paalam', 'agpakadan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Pasayloa ko', 'Pasensya');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Excuse me', 'dumalanak man');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Palihug', 'maidawat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Karong adlawa', 'Ita nga aldaw');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Ugma', 'inton bigat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Kagabi', 'idi kalman');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Higala', 'Gayyem');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Kaon', 'Mangan');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Imnon', 'Inumen');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Oras', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Minuto', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ceb', 'ilo', 'Ako', 'Siak ni');
+
+-- Ilokano to Cebuano
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Mano ti layo?', 'Asa na, layo pa?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Ayanna ti kasinsin nga [hotel/restawran/CR]?', 'Asa ang pinakadool nga [hotel/restawran/CR]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Adda kadi ti suhesionmo para iti nasayaat nga lugar a bisitaan?', 'Aduna kay mga rekomendasyon sa nindot nga lugar nga bisitahan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Mano ti layo manipud dita?', 'Unsa ka layo gikan diri?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Nawawala ak.', 'Naligaw ko.');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Makatulong ka kadi?', 'Pwede ko nimo tabangan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Mabalin mo kadi nga ited ti direksyon iti [lugar]?', 'Pwede nimo ako hatagan og direksyon padulong sa [lugar]?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Agyamanak unay', 'Daghang salamat');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Naimbag a bigat', 'Maayong buntag');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Naimbag a malem', 'Maayong hapon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Naimbag a rabii', 'Maayong gabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Ania ti nagan mo?', 'Unsa imong pangalan?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Agyamanak ti panang-abot', 'Malipayong pag-abot');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Kamusta kan', 'Kumusta ka?');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Mayat met', 'Okay ra ko');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'saan', 'Dili');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'wen', 'Oo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'diak ammo', 'Wala ko kabalo');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'agpakadan', 'Paalam');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Pasensya', 'Pasayloa ko');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'dumalanak man', 'Excuse me');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'maidawat', 'Palihug');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Ita nga aldaw', 'Karong adlawa');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'inton bigat', 'Ugma');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'idi kalman', 'Kagabi');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Gayyem', 'Higala');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Mangan', 'Kaon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Inumen', 'Imnon');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Oras', 'Oras');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Minuto', 'Minuto');
+INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Siak ni', 'Ako');
+
 SELECT * from translations;
+
+DROP TABLE translations;
+
+
+

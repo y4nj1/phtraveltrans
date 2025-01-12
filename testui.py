@@ -30,7 +30,8 @@ class TextTranslateApp(QWidget):
         self.backButton.clicked.connect(self.goBack)
 
         self.clearButton = QPushButton('Clear', self)
-        self.clearButton.setStyleSheet("font-size: 14px; padding: 5px;")
+        self.clearButton.setStyleSheet("font-size: 16px; padding: 8px;")
+        self.clearButton.setFixedSize(150, 40)
         self.clearButton.clicked.connect(self.clear)
 
         
@@ -58,7 +59,7 @@ class TextTranslateApp(QWidget):
         topBarLayout = QHBoxLayout()
         topBarLayout.addWidget(self.sourceLanguage, alignment=Qt.AlignLeft)
         topBarLayout.addWidget(self.translateButton, alignment=Qt.AlignCenter)
-        topBarLayout.addWidget(self.clearButton)
+        topBarLayout.addWidget(self.clearButton, alignment=Qt.AlignCenter)
         topBarLayout.addWidget(self.targetLanguage, alignment=Qt.AlignRight)
 
         textLayout = QHBoxLayout()

@@ -14,7 +14,7 @@ def fetch_translation(source_text, source_lang, target_lang):
         connection = mysql.connector.connect(
             host="localhost",
             user="root", 
-            password="pHtrans2025",  
+            password="Password",  
             database="translations_db"  
         )
 
@@ -129,6 +129,47 @@ def normalize_transcription(text, language):
         },
         "ilo": {  # Ilokano corrections
             "nagmayat nga aldaw": "naimbag nga aldaw",
+
+            "9 bag Abigail" : "Naimbag a bigat",
+            "play bug a bigot" : "Naimbag a bigat",
+            "naimbag a bigot" : "Naimbag a bigat",
+            "9 bug a bigot" : "Naimbag a bigat",
+            "name bag Abigail" : "Naimbag a bigat",
+            "nothing but a bigot" : "Naimbag a bigat",
+            "play Abigail" : "Naimbag a bigat",
+            "9 bag of bigot" : "Naimbag a bigat",
+            "name bag of bigot" : "Naimbag a bigat",
+            "name but a bigger" : "Naimbag a bigat",
+            "rainbow Abigail" : "Naimbag a bigat",
+            "Abigail" : "Naimbag a bigat",
+            "my inbox Abigail" : "Naimbag a bigat",
+
+            "playing back Amal" : "Naimbag a malem",
+            "name of Amalie" : "Naimbag a malem",
+            "play Eminem" : "Naimbag a malem",
+            "nightmare lemon" : "Naimbag a malem",
+            "nightmare am" : "Naimbag a malem",
+            "name back on my name" : "Naimbag a malem",
+            "nightmare" : "Naimbag a malem",
+            "play Bob Marley" : "Naimbag a malem",
+            "name of Amal" : "Naimbag a malem",
+            "name bug Amalie" : "Naimbag a malem",
+            "Name by Eminem" : "Naimbag a malem",
+
+            "Name by Eminem" : "Naimbag a rabii",
+            "name bug are" : "Naimbag a rabii",
+            "9 bug Arab" : "Naimbag a rabii",
+            "9 bug are" : "Naimbag a rabii",
+            "play Bad are" : "Naimbag a rabii",
+            "9 bag are" : "Naimbag a rabii",
+            "my inbox Arabic" : "Naimbag a rabii",
+            "name bag Arabic" : "Naimbag a rabii",
+            "Play Arab" : "Naimbag a rabii",
+            "nothing but Arabic" : "Naimbag a rabii",
+            "nightmare" : "Naimbag a rabii",
+            "nothing but Arab" : "Naimbag a rabii",
+            "my inbox are" : "Naimbag a rabii",
+
         },
     }
 

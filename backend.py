@@ -102,6 +102,8 @@ def normalize_transcription(text, language):
             "the Khan salamat": "Daghang salamat",
             "Dog House salamat": "Daghang salamat",
             "Doug ham salamat": "Daghang salamat",
+            "dog house sell": "Daghang salamat",
+            "Doug ham salim": "Daghang salamat",
 #===============================================            
             "pwede kunimoto baingan": "Pwede ko nimo tabangan?",
             "puede kunimoto baingan": "Pwede ko nimo tabangan?",
@@ -112,6 +114,7 @@ def normalize_transcription(text, language):
             "cabangon": "tabangan",
             
             "delete": "Dili",
+            "Billy": "Dili",
             
             "oh oh": "Oo",
             "uh-oh": "Oo",
@@ -120,15 +123,28 @@ def normalize_transcription(text, language):
             "hola como Caballo": "Wala ko kabalo",
             "malaco Cavallo": "Wala ko kabalo",
             "hola como": "Wala ko kabalo",
+            "Wala AKO Caballo": "Wala ko kabalo",
             
             
         },
-        "tl": {  # Tagalog corrections
-            "ko musta": "kumusta",
-            "pa alam": "paalam",
-        },
+
         "ilo": {  # Ilokano corrections
-            "nagmayat nga aldaw": "naimbag nga aldaw",
+            "naimbag Arabi": "Naimbag a rabii",
+            "naimbag Arabi": "Naimbag a rabii",
+            
+            "delete": "Naimbag a malem",
+            
+            "naimbag a big": "Naimbag a bigat",
+            
+            "delete": "Agyamanak unay",
+            
+            "delete": "agbalin nak pa nga tulungan?",
+            
+            "Maddie": "madi",
+            "Madee": "madi",
+            
+            "when": "wen",
+            
         },
     }
 
@@ -155,8 +171,15 @@ def recognize_speech(source_lang, target_lang):
         normalized_text = normalize_transcription(recognized_text, source_lang)
         print(f"Normalized ({source_lang}): {normalized_text}")
 
-        # Translate normalized text
-        translated_text = translate_text(normalized_text, source_lang, target_lang)
+        # First, try fetching translation from the database
+        translation = fetch_translation(normalized_text, source_lang, target_lang)
+
+        if translation == normalized_text:  # If translation not found in database, use Google Translate
+            print(f"Translation not found in database.")
+            translated_text = translate_text(normalized_text, source_lang, target_lang)
+        else:
+            translated_text = translation  # Use the database translation
+
         print(f"Translated ({target_lang}): {translated_text}")
 
         return normalized_text, translated_text

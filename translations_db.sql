@@ -2,6 +2,9 @@ CREATE DATABASE IF NOT EXISTS translations_db;
 
 USE translations_db;
 
+-- Delete a table
+DROP TABLE translations;
+
 CREATE TABLE translations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     source_language VARCHAR(10) NOT NULL,
@@ -406,8 +409,7 @@ INSERT INTO translations (source_language, target_language, source_text, transla
 INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Minuto', 'Minuto');
 INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Siak ni', 'Ako');
 
-SELECT * from translations;
-
+-- Update Ilokano text
 UPDATE translations_db.translations SET translated_text = 'Pakawanen nak' WHERE (id = '82');
 UPDATE translations_db.translations SET translated_text = 'Pakawanen nak' WHERE (id = '206');
 UPDATE translations_db.translations SET translated_text = 'Pakawanen nak' WHERE (id = '330');
@@ -456,3 +458,5 @@ UPDATE translations_db.translations SET translated_text = 'Kasatnu pay kaadayo' 
 UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo' WHERE (id = '94');
 UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo' WHERE (id = '218');
 UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo' WHERE (id = '342');
+
+SELECT * from translations;

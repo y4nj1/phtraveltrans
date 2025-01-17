@@ -3,6 +3,7 @@ import re
 from googletrans import Translator
 import mysql.connector
 
+
 # Initialize recognizer
 recognizer = sr.Recognizer()
 translator = Translator()
@@ -14,7 +15,7 @@ def fetch_translation(source_text, source_lang, target_lang):
         connection = mysql.connector.connect(
             host="localhost",
             user="root", 
-            password="Password",  
+            password="pHtrans2025",  
             database="translations_db"  
         )
 
@@ -155,6 +156,9 @@ def normalize_transcription(text, language):
             "name of Amal" : "Naimbag a malem",
             "name bug Amalie" : "Naimbag a malem",
             "Name by Eminem" : "Naimbag a malem",
+            "nothing but I'm alone" : "Naimbag a malem",
+            "lightning bug a million" : "Naimbag a malem",
+            "nothing about him" : "Naimbag a malem",
 
             "Name by Eminem" : "Naimbag a rabii",
             "name bug are" : "Naimbag a rabii",
@@ -170,11 +174,21 @@ def normalize_transcription(text, language):
             "nothing but Arab" : "Naimbag a rabii",
             "my inbox are" : "Naimbag a rabii",
             "naimbag Arabi": "Naimbag a rabii",
+            "naimbag Arabia": "Naimbag a rabii",
+            "naimbag arabe": "Naimbag a rabii",
             
             "Maddie": "madi",
             "Madee": "madi",
             
             "when": "wen",
+            
+            "agyamanak unai": "Agyamanak unay",
+            "Oggy Amana uni": "Agyamanak unay",
+            "Agia mene": "Agyamanak unay",
+            "agamana unai": "Agyamanak unay",
+            "are you my not tonight": "Agyamanak unay",
+            "I get my neck on I": "Agyamanak unay",
+            "agamana uni": "Agyamanak unay",
 
         },
     }

@@ -372,7 +372,11 @@ class LiveFeedCaptureInterface(QWidget):
         extracted_text = " ".join([text for (_, text, _) in results])
 
         if not extracted_text:
-            QMessageBox.warning(self, "Warning", "No text detected in image")
+            retry = QMessageBox.question(self, "No Text Detected", "No text detected in the image. Would you like to capture another image?", QMessageBox.Yes | QMessageBox.No)
+            if retry == QMessageBox.Yes:
+                self.startLiveFeed()
+            else:
+                self.close()
             return
 
         self.goToTranslateCallback(extracted_text)

@@ -8,8 +8,12 @@ import time
 import pytesseract
 from datetime import datetime
 from backend import translate_text, recognize_speech
+import easyocr
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
+# Initialize EasyOCR
+reader = easyocr.Reader(['en', 'tl'])
 
 # Language code mapping
 language_code_map = {
@@ -357,45 +361,22 @@ class LiveFeedCaptureInterface(QWidget):
             QMessageBox.warning(self, "Error", "Failed to load captured image")
             return
 
-        # Enhanced preprocessing pipeline
-        try:
-            # 1. Resize with better detail preservation
-            img = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_LANCZOS4)
-            
-            # 2. Convert to grayscale
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            
-            # 3. Apply bilateral filter for edge preservation
-            denoised = cv2.bilateralFilter(gray, 9, 75, 75)
-            
-            # 4. Enhance contrast using CLAHE
-            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
-            enhanced = clahe.apply(denoised)
-            
-            # 5. Adaptive thresholding with optimized parameters
-            thresh = cv2.adaptiveThreshold(
-                enhanced, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                cv2.THRESH_BINARY, 15, 8
-            )
-            
-            # 6. OCR with improved configuration
-            custom_config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?\ '
-            text = pytesseract.image_to_string(thresh, config=custom_config, lang='eng')
-            
-            # 7. Advanced text cleanup
-            text = ' '.join(filter(None, text.split()))
-            text = text.strip('.,!? \n\t')
-            
-            if not text:
-                QMessageBox.warning(self, "Warning", "No text detected in image")
-                return
-                    
-            self.goToTranslateCallback(text)
-            self.close()
-        
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Image processing failed: {str(e)}")
+        # Convert to grayscale
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        # Enhance contrast using adaptive thresholding
+        enhanced = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+
+        # Perform OCR using EasyOCR
+        results = reader.readtext(enhanced)
+        extracted_text = " ".join([text for (_, text, _) in results])
+
+        if not extracted_text:
+            QMessageBox.warning(self, "Warning", "No text detected in image")
             return
+
+        self.goToTranslateCallback(extracted_text)
+        self.close()
 
 class ImageTranslateApp(QWidget):
     def __init__(self, text, mainMenuCallback):

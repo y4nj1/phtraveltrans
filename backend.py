@@ -2,6 +2,9 @@ import speech_recognition as sr
 import re
 from googletrans import Translator
 import mysql.connector
+# import cv2
+# import easyocr
+# import os
 
 # Initialize recognizer
 recognizer = sr.Recognizer()
@@ -14,7 +17,7 @@ def fetch_translation(source_text, source_lang, target_lang):
         connection = mysql.connector.connect(
             host="localhost",
             user="root", 
-            password="Password",  
+            password="pHtrans2025",  
             database="translations_db"  
         )
 
@@ -209,5 +212,29 @@ def recognize_speech(source_lang, target_lang):
     except Exception as e:
         return "", f"Error: {e}"
 
+# # Initialize EasyOCR
+# reader = easyocr.Reader(["en", "tl"])  # Supports English, Tagalog, Cebuano, and Ilocano
 
+# def extract_text_from_image():
+#     camera = cv2.VideoCapture(0)
+#     ret, frame = camera.read()
+#     camera.release()
 
+#     if not ret:
+#         return "Error: Failed to capture image."
+
+#     # Save the captured image
+#     output_dir = "captured_images"
+#     os.makedirs(output_dir, exist_ok=True)
+#     image_path = os.path.join(output_dir, "captured.jpg")
+#     cv2.imwrite(image_path, frame)
+
+#     # Convert to grayscale for better OCR accuracy
+#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#     enhanced = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
+
+#     # Perform OCR
+#     results = reader.readtext(enhanced)
+#     extracted_text = " ".join([text for (_, text, _) in results])
+
+#     return extracted_text

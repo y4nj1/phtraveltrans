@@ -5,12 +5,9 @@ import sys
 import cv2
 import os
 import time
-import pytesseract
 from datetime import datetime
 from backend import translate_text, recognize_speech
 import easyocr
-
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 # Initialize EasyOCR
 reader = easyocr.Reader(['en', 'tl'])
@@ -370,6 +367,10 @@ class LiveFeedCaptureInterface(QWidget):
         # Perform OCR using EasyOCR
         results = reader.readtext(enhanced)
         extracted_text = " ".join([text for (_, text, _) in results])
+        
+        # Delete the captured image
+        if os.path.exists(self.captured_image_path):
+            os.remove(self.captured_image_path)
 
         if not extracted_text:
             retry = QMessageBox.question(self, "No Text Detected", "No text detected in the image. Would you like to capture another image?", QMessageBox.Yes | QMessageBox.No)

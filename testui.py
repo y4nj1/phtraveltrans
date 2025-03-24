@@ -8,6 +8,7 @@ import time
 from datetime import datetime
 from backend import translate_text, recognize_speech
 import easyocr
+from langdetect import detect, LangDetectException
 
 # Initialize EasyOCR
 reader = easyocr.Reader(['en', 'tl'])
@@ -19,6 +20,19 @@ language_code_map = {
     "Cebuano": "ceb",
     "Ilocano": "ilo"
 }
+
+# Word-based heuristic for Cebuano and Ilocano detection
+cebuano_words = {"maayong", "daghang", "salamat", "tabangan", "wala", "kabalo" "asa" "pasidaan"}
+ilocano_words = {"naimbag", "bigat", "malem", "rabii", "agyamanak", "wen"}
+
+def detect_cebuano_ilocano(text):
+    """Custom detection for Cebuano and Ilocano based on common words."""
+    words = set(text.lower().split())
+    if words & cebuano_words:
+        return "ceb"
+    elif words & ilocano_words:
+        return "ilo"
+    return None  # Use langdetect as fallback
 
 class TextTranslateApp(QWidget):
     def __init__(self, mainMenuCallback):
@@ -84,18 +98,44 @@ class TextTranslateApp(QWidget):
         src_lang_name = self.sourceLanguage.currentText()
         tgt_lang_name = self.targetLanguage.currentText()
 
-        if src_lang_name == "Select Language" or tgt_lang_name == "Select Language":
-            QMessageBox.warning(self, "Error", "Please select valid languages.")
+        if tgt_lang_name == "Select Language":
+            QMessageBox.warning(self, "Error", "Please select a valid target language.")
             return
 
-        src_lang = language_code_map.get(src_lang_name)
         tgt_lang = language_code_map.get(tgt_lang_name)
 
-        if not src_lang or not tgt_lang:
-            QMessageBox.warning(self, "Error", "Invalid language selection.")
+        if not tgt_lang:
+            QMessageBox.warning(self, "Error", "Invalid target language selection.")
             return
 
         source_text = self.sourceText.toPlainText()
+
+        try:
+            # First, attempt custom detection
+            custom_detected = detect_cebuano_ilocano(source_text)
+
+            if custom_detected:
+                detected_lang = custom_detected
+            else:
+                # Use langdetect as a fallback
+                detected_lang = detect(source_text)
+
+            detected_lang_name = next(key for key, value in language_code_map.items() if value == detected_lang)
+        except LangDetectException:
+            QMessageBox.warning(self, "Error", "Could not detect the source language.")
+            return
+
+        # Auto-adjust source language dropdown
+        if src_lang_name == "Select Language" or src_lang_name != detected_lang_name:
+            src_lang_name = detected_lang_name
+            self.sourceLanguage.setCurrentText(src_lang_name)
+
+        src_lang = language_code_map.get(src_lang_name)
+
+        if not src_lang:
+            QMessageBox.warning(self, "Error", "Invalid source language detected.")
+            return
+
         translated_text = translate_text(source_text, src_lang, tgt_lang)
         self.targetText.setText(translated_text)
 

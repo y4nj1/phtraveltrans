@@ -22,7 +22,9 @@ language_code_map = {
 }
 
 # Word-based heuristic for Cebuano and Ilocano detection
-cebuano_words = {"maayong", "daghang", "salamat", "tabangan", "wala", "kabalo" "asa" "pasidaan"}
+cebuano_words = {
+    "maayong", "daghang", "salamat", "tabangan", "wala", "kabalo", "asa", "pasidaan!"
+}
 ilocano_words = {"naimbag", "bigat", "malem", "rabii", "agyamanak", "wen"}
 
 def detect_cebuano_ilocano(text):
@@ -107,7 +109,7 @@ class TextTranslateApp(QWidget):
         if not tgt_lang:
             QMessageBox.warning(self, "Error", "Invalid target language selection.")
             return
-
+        
         source_text = self.sourceText.toPlainText()
 
         try:
@@ -120,6 +122,7 @@ class TextTranslateApp(QWidget):
                 # Use langdetect as a fallback
                 detected_lang = detect(source_text)
 
+            # Map detected language code to its name
             detected_lang_name = next(key for key, value in language_code_map.items() if value == detected_lang)
         except LangDetectException:
             QMessageBox.warning(self, "Error", "Could not detect the source language.")
@@ -131,6 +134,7 @@ class TextTranslateApp(QWidget):
             self.sourceLanguage.setCurrentText(src_lang_name)
 
         src_lang = language_code_map.get(src_lang_name)
+
 
         if not src_lang:
             QMessageBox.warning(self, "Error", "Invalid source language detected.")
@@ -420,8 +424,20 @@ class LiveFeedCaptureInterface(QWidget):
                 self.close()
             return
 
-        self.goToTranslateCallback(extracted_text)
+        # Pass the extracted text to TextTranslateApp instead of ImageTranslateApp
+        self.goToTextTranslateApp(extracted_text)
         self.close()
+
+    def goToTextTranslateApp(self, text):
+        """Switch to TextTranslateApp with the extracted text."""
+        self.textTranslateApp = TextTranslateApp(self.goBackToMainMenu)
+        self.textTranslateApp.sourceText.setText(text)
+        self.textTranslateApp.show()
+        self.close()
+
+    def goBackToMainMenu(self):
+        """Return to the main menu."""
+        self.goToTranslateCallback()
 
 class ImageTranslateApp(QWidget):
     def __init__(self, text, mainMenuCallback):

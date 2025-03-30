@@ -14,7 +14,7 @@ def fetch_translation(source_text, source_lang, target_lang):
         connection = mysql.connector.connect(
             host="localhost",
             user="root", 
-            password="pHtrans2025",  
+            password="",  
             database="translations_db"  
         )
 

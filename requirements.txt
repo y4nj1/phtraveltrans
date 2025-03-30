@@ -3,5 +3,6 @@ speechrecognition
 googletrans==4.0.0-rc1
 mysql-connector-python
 opencv-python
+pytesseract
 easyocr
 PyQt5

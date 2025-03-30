@@ -2,6 +2,9 @@ CREATE DATABASE IF NOT EXISTS translations_db;
 
 USE translations_db;
 
+-- Delete a table
+DROP TABLE translations;
+
 CREATE TABLE translations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     source_language VARCHAR(10) NOT NULL,
@@ -406,9 +409,54 @@ INSERT INTO translations (source_language, target_language, source_text, transla
 INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Minuto', 'Minuto');
 INSERT INTO translations (source_language, target_language, source_text, translated_text) VALUES ('ilo', 'ceb', 'Siak ni', 'Ako');
 
+-- Update Ilokano text
+UPDATE translations_db.translations SET translated_text = 'Pakawanen nak' WHERE (id = '82');
+UPDATE translations_db.translations SET translated_text = 'Pakawanen nak' WHERE (id = '206');
+UPDATE translations_db.translations SET translated_text = 'Pakawanen nak' WHERE (id = '330');
+UPDATE translations_db.translations SET source_text = 'Pakawanen nak' WHERE (id = '113');
+UPDATE translations_db.translations SET source_text = 'Pakawanen nak' WHERE (id = '237');
+UPDATE translations_db.translations SET source_text = 'Pakawanen nak' WHERE (id = '361');
+
+UPDATE translations_db.translations SET translated_text = 'Madi' WHERE (id = '78');
+UPDATE translations_db.translations SET translated_text = 'Madi' WHERE (id = '202');
+UPDATE translations_db.translations SET translated_text = 'Madi' WHERE (id = '326');
+UPDATE translations_db.translations SET source_text = 'Madi' WHERE (id = '109');
+UPDATE translations_db.translations SET source_text = 'Madi' WHERE (id = '233');
+UPDATE translations_db.translations SET source_text = 'Madi' WHERE (id = '357');
+
+UPDATE translations_db.translations SET translated_text = 'Agbalin nak pa nga tulungan?' WHERE (id = '68');
+UPDATE translations_db.translations SET translated_text = 'Agbalin nak pa nga tulungan?' WHERE (id = '192');
+UPDATE translations_db.translations SET translated_text = 'Agbalin nak pa nga tulungan?' WHERE (id = '316');
+UPDATE translations_db.translations SET source_text = 'Agbalin nak pa nga tulungan?' WHERE (id = '99');
+UPDATE translations_db.translations SET source_text = 'Agbalin nak pa nga tulungan?' WHERE (id = '223');
+UPDATE translations_db.translations SET source_text = 'Agbalin nak pa nga tulungan?' WHERE (id = '347');
+
+UPDATE translations_db.translations SET translated_text = 'Mapukpukaw nak' WHERE (id = '67');
+UPDATE translations_db.translations SET translated_text = 'Mapukpukaw nak' WHERE (id = '191');
+UPDATE translations_db.translations SET translated_text = 'Mapukpukaw nak' WHERE (id = '315');
+UPDATE translations_db.translations SET source_text = 'Mapukpukaw nak' WHERE (id = '98');
+UPDATE translations_db.translations SET source_text = 'Mapukpukaw nak' WHERE (id = '222');
+UPDATE translations_db.translations SET source_text = 'Mapukpukaw nak' WHERE (id = '346');
+
+UPDATE translations_db.translations SET translated_text = 'Kasatnu pay kaadayo manipod ditoy' WHERE (id = '66');
+UPDATE translations_db.translations SET translated_text = 'Kasatnu pay kaadayo manipod ditoy' WHERE (id = '190');
+UPDATE translations_db.translations SET translated_text = 'Kasatnu pay kaadayo manipod ditoy' WHERE (id = '314');
+UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo manipod ditoy' WHERE (id = '97');
+UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo manipod ditoy' WHERE (id = '221');
+UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo manipod ditoy' WHERE (id = '345');
+
+UPDATE translations_db.translations SET translated_text = 'Ayanna ti kaasitgan nga [hotel/restawran/CR]?' WHERE (id = '64');
+UPDATE translations_db.translations SET translated_text = 'Ayanna ti kaasitgan nga [hotel/restawran/CR]?' WHERE (id = '188');
+UPDATE translations_db.translations SET translated_text = 'Ayanna ti kaasitgan nga [hotel/restawran/CR]?' WHERE (id = '312');
+UPDATE translations_db.translations SET source_text = 'Ayanna ti kaasitgan nga [hotel/restawran/CR]?' WHERE (id = '95');
+UPDATE translations_db.translations SET source_text = 'Ayanna ti kaasitgan nga [hotel/restawran/CR]?' WHERE (id = '219');
+UPDATE translations_db.translations SET source_text = 'Ayanna ti kaasitgan nga [hotel/restawran/CR]?' WHERE (id = '343');
+
+UPDATE translations_db.translations SET translated_text = 'Kasatnu pay kaadayo' WHERE (id = '63');
+UPDATE translations_db.translations SET translated_text = 'Kasatnu pay kaadayo' WHERE (id = '187');
+UPDATE translations_db.translations SET translated_text = 'Kasatnu pay kaadayo' WHERE (id = '311');
+UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo' WHERE (id = '94');
+UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo' WHERE (id = '218');
+UPDATE translations_db.translations SET source_text = 'Kasatnu pay kaadayo' WHERE (id = '342');
+
 SELECT * from translations;
-
-DROP TABLE translations;
-
-
-

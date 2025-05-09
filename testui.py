@@ -27,14 +27,35 @@ cebuano_words = {
 }
 ilocano_words = {"naimbag", "bigat", "malem", "rabii", "agyamanak", "wen"}
 
-def detect_cebuano_ilocano(text):
-    """Custom detection for Cebuano and Ilocano based on common words."""
+english_words = {
+    "hello", "hi", "stop", "warning", "danger", "exit", "enter", "welcome",
+    "please", "thank", "thanks", "yes", "no", "help", "open", "close", "ten", "purple", "airfield", "unloading"
+}
+
+tagalog_words = {
+    "salamat", "oo", "hindi", "bakit", "kumusta", "ingat", "baka",
+    "pinto", "labas", "loob", "tao", "babala", "tulong", "buksan", "isara"
+}
+
+def detect_language(text):
+    """Enhanced language detection for all supported languages."""
     words = set(text.lower().split())
+    
+    # Use the same intersection logic for both single and multi-word entries
     if words & cebuano_words:
         return "ceb"
-    elif words & ilocano_words:
+    if words & ilocano_words:
         return "ilo"
-    return None  # Use langdetect as fallback
+    if words & english_words:
+        return "en"
+    if words & tagalog_words:
+        return "tl"
+    
+    # Fallback to langdetect with error handling
+    try:
+        return detect(text)
+    except LangDetectException:
+        return None
 
 class TextTranslateApp(QWidget):
     def __init__(self, mainMenuCallback):
@@ -62,6 +83,8 @@ class TextTranslateApp(QWidget):
         self.sourceLanguage.setFixedSize(150, 40)
         self.sourceLanguage.setStyleSheet("font-size: 14px;")
         self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
+        self.sourceLanguage.setEditable(True)
+        self.sourceLanguage.setInsertPolicy(QComboBox.NoInsert)  # Prevent user from adding new items
 
         self.targetLanguage = QComboBox(self)
         self.targetLanguage.setFixedSize(150, 40)
@@ -97,7 +120,7 @@ class TextTranslateApp(QWidget):
         self.translateButton.clicked.connect(self.translateButtonClicked)
 
     def translateButtonClicked(self):
-        src_lang_name = self.sourceLanguage.currentText()
+        src_lang_name = self.sourceLanguage.currentText().split(" - ")[0]  # Remove "- Detected" if present
         tgt_lang_name = self.targetLanguage.currentText()
 
         if tgt_lang_name == "Select Language":
@@ -105,39 +128,31 @@ class TextTranslateApp(QWidget):
             return
 
         tgt_lang = language_code_map.get(tgt_lang_name)
-
         if not tgt_lang:
             QMessageBox.warning(self, "Error", "Invalid target language selection.")
             return
-        
-        source_text = self.sourceText.toPlainText()
 
-        try:
-            # First, attempt custom detection
-            custom_detected = detect_cebuano_ilocano(source_text)
+        source_text = self.sourceText.toPlainText().strip()
+        if not source_text:
+            QMessageBox.warning(self, "Error", "Please enter text to translate.")
+            return
 
-            if custom_detected:
-                detected_lang = custom_detected
-            else:
-                # Use langdetect as a fallback
-                detected_lang = detect(source_text)
-
-            # Map detected language code to its name
-            detected_lang_name = next(key for key, value in language_code_map.items() if value == detected_lang)
-        except LangDetectException:
+        # Use enhanced language detection
+        detected_lang = detect_language(source_text)
+        if not detected_lang:
             QMessageBox.warning(self, "Error", "Could not detect the source language.")
             return
 
-        # Auto-adjust source language dropdown
-        if src_lang_name == "Select Language" or src_lang_name != detected_lang_name:
-            src_lang_name = detected_lang_name
-            self.sourceLanguage.setCurrentText(src_lang_name)
-
-        src_lang = language_code_map.get(src_lang_name)
-
-
-        if not src_lang:
-            QMessageBox.warning(self, "Error", "Invalid source language detected.")
+        try:
+            detected_lang_name = next(key for key, value in language_code_map.items() if value == detected_lang)
+            if src_lang_name == "Select Language":
+                # Only show detection if no language was manually selected
+                detected_text = f"{detected_lang_name} - Detected"
+                self.sourceLanguage.setCurrentText(detected_text)  # Show detected text without adding to items
+                src_lang_name = detected_lang_name  # Use the base language name for translation
+            src_lang = detected_lang  # Use detected language code directly
+        except StopIteration:
+            QMessageBox.warning(self, "Error", "Detected language is not supported.")
             return
 
         translated_text = translate_text(source_text, src_lang, tgt_lang)
@@ -437,7 +452,7 @@ class LiveFeedCaptureInterface(QWidget):
 
     def goBackToMainMenu(self):
         """Return to the main menu."""
-        self.goToTranslateCallback()
+        self.goToTranslateCallback()  # No text parameter needed when going back
 
 class ImageTranslateApp(QWidget):
     def __init__(self, text, mainMenuCallback):
@@ -461,6 +476,8 @@ class ImageTranslateApp(QWidget):
         self.sourceLanguage.setFixedSize(150, 40)
         self.sourceLanguage.setStyleSheet("font-size: 14px;")
         self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
+        self.sourceLanguage.setEditable(True)
+        self.sourceLanguage.setInsertPolicy(QComboBox.NoInsert)  # Prevent user from adding new items
 
         self.targetLanguage = QComboBox(self)
         self.targetLanguage.setFixedSize(150, 40)
@@ -496,7 +513,7 @@ class ImageTranslateApp(QWidget):
         self.translateButton.clicked.connect(self.translateButtonClicked)
 
     def translateButtonClicked(self):
-        src_lang_name = self.sourceLanguage.currentText()
+        src_lang_name = self.sourceLanguage.currentText().split(" - ")[0]  # Remove "- Detected" if present
         tgt_lang_name = self.targetLanguage.currentText()
 
         if src_lang_name == "Select Language" or tgt_lang_name == "Select Language":
@@ -578,10 +595,14 @@ class MainMenuApp(QWidget):
     def showMainMenu(self):
         self.show()
 
-    def goToTranslateCallback(self, text):
-        self.imageTranslateApp = ImageTranslateApp(text, self.showMainMenu)
-        self.imageTranslateApp.show()
-        self.close()
+    def goToTranslateCallback(self, text=None):  # Make text parameter optional
+        if text:
+            self.imageTranslateApp = ImageTranslateApp(text, self.showMainMenu)
+            self.imageTranslateApp.show()
+        else:
+            # Just show main menu if no text provided
+            self.show()
+        
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

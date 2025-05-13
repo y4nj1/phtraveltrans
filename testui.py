@@ -23,39 +23,67 @@ language_code_map = {
 
 # Word-based heuristic for Cebuano and Ilocano detection
 cebuano_words = {
-    "maayong", "daghang", "salamat", "tabangan", "wala", "kabalo", "asa", "pasidaan!"
+    "maayong", "daghang", "salamat", "tabangan", "wala", "kabalo", "asa", "pasidaan!",
+    "buntag", "hapon", "gabii", "palihug", "ayo", "dili", "oo", "diri", "didto",
+    "balay", "pagkaon", "tubig", "init", "bugnaw", "kusog", "hinay", "tawo",
+    "sakit", "tambalan", "duol", "layo", "kalayo", "peligro", "dalan", "lakaw"
 }
-ilocano_words = {"naimbag", "bigat", "malem", "rabii", "agyamanak", "wen"}
+
+ilocano_words = {
+    "naimbag", "bigat", "malem", "rabii", "agyamanak", "wen", 
+    "saan", "maysa", "dua", "tallo", "uppat", "lima", "innem", "pito",
+    "kasta", "kastoy", "dayta", "daytoy", "isu", "adda", "awan", "napintas",
+    "balay", "tawen", "init", "lammin", "tao", "nasakit", "ospital", "agbasa"
+}
 
 english_words = {
     "hello", "hi", "stop", "warning", "danger", "exit", "enter", "welcome",
-    "please", "thank", "thanks", "yes", "no", "help", "open", "close", "ten", "purple", "airfield", "unloading"
+    "please", "thank", "thanks", "yes", "no", "help", "open", "close", "ten", "purple", "airfield", "unloading",
+    "always", "keep", "right", "left", "maintain", "social", "distancing", "distance", "and", "the",
+    "emergency", "caution", "notice", "attention", "warning", "follow", "rules", "safety", "first",
+    "use", "wear", "mask", "required", "only", "area", "zone", "authorized", "personnel",
+    "do", "not", "push", "pull", "slide", "walk", "run", "way", "this", "that", "direction",
+    "in", "out", "up", "down", "stairs", "elevator", "room", "office", "hall", "lobby",
+    "information", "counter", "service", "public", "private", "restricted", "wet", "floor", "ceiling"
 }
 
 tagalog_words = {
     "salamat", "oo", "hindi", "bakit", "kumusta", "ingat", "baka",
-    "pinto", "labas", "loob", "tao", "babala", "tulong", "buksan", "isara"
+    "pinto", "labas", "loob", "tao", "babala", "tulong", "buksan", "isara",
+    "mainit", "malamig", "mabilis", "mabagal", "bahay", "tubig", "pagkain",
+    "sakit", "ospital", "delikado", "bawal", "daan", "tama", "mali", "halika",
+    "dito", "diyan", "roon", "araw", "gabi", "umaga", "tanghali", "hapon", "gabi"
 }
 
 def detect_language(text):
     """Enhanced language detection for all supported languages."""
     words = set(text.lower().split())
     
-    # Use the same intersection logic for both single and multi-word entries
-    if words & cebuano_words:
-        return "ceb"
-    if words & ilocano_words:
-        return "ilo"
-    if words & english_words:
-        return "en"
-    if words & tagalog_words:
-        return "tl"
+    # Count matches for each language
+    english_matches = len(words & english_words)
+    tagalog_matches = len(words & tagalog_words)
+    cebuano_matches = len(words & cebuano_words)
+    ilocano_matches = len(words & ilocano_words)
     
-    # Fallback to langdetect with error handling
+    # If any matches found, return the language with most matches
+    matches = {
+        "en": english_matches,
+        "tl": tagalog_matches,
+        "ceb": cebuano_matches,
+        "ilo": ilocano_matches
+    }
+    
+    max_matches = max(matches.values())
+    if max_matches > 0:
+        return max(matches.items(), key=lambda x: x[1])[0]
+    
+    # If no matches, try langdetect with error handling
     try:
-        return detect(text)
+        detected = detect(text)
+        return detected if detected in ["en", "tl", "ceb", "ilo"] else "en"
     except LangDetectException:
-        return None
+        # Default to English for common signs and instructions
+        return "en"
 
 class TextTranslateApp(QWidget):
     def __init__(self, mainMenuCallback):

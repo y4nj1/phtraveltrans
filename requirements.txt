@@ -6,3 +6,6 @@ opencv-python
 pytesseract
 easyocr
 PyQt5
+
+sudo apt-get update
+sudo apt-get install -y python3-picamera2

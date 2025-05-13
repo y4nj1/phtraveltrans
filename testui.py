@@ -9,6 +9,7 @@ from datetime import datetime
 from backend import translate_text, recognize_speech
 import easyocr
 from langdetect import detect, LangDetectException
+import platform
 
 # Initialize EasyOCR
 reader = easyocr.Reader(['en', 'tl'])
@@ -329,29 +330,39 @@ class LiveFeedThread(QThread):
     def __init__(self, parent=None):
         super().__init__(parent)
         self._run_flag = True
+        self.is_rpi = platform.system() == 'Linux' and platform.machine().startswith('arm')
         self.initCamera()
 
     def initCamera(self):
-        # Force DirectShow backend
-        self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-        
-        if not self.cap.isOpened():
-            self.error.emit("Camera initialization failed")
-            return False
-
-        # Set properties after successful initialization
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-        self.cap.set(cv2.CAP_PROP_FPS, 30)
-        
-        # Verify initialization
-        ret, _ = self.cap.read()
-        if not ret:
-            self.cap.release()
-            self.error.emit("Camera test frame capture failed")
-            return False
+        try:
+            if self.is_rpi:
+                # Raspberry Pi camera initialization
+                self.cap = cv2.VideoCapture(0)
+                # Set specific parameters for RPi camera if needed
+                self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+                self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+                self.cap.set(cv2.CAP_PROP_FPS, 30)
+            else:
+                # Windows/PC webcam initialization
+                self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+                self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+                self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+                self.cap.set(cv2.CAP_PROP_FPS, 30)
             
-        return True
+            if not self.cap.isOpened():
+                self.error.emit("Camera initialization failed")
+                return False
+
+            ret, _ = self.cap.read()
+            if not ret:
+                self.cap.release()
+                self.error.emit("Camera test frame capture failed")
+                return False
+                
+            return True
+        except Exception as e:
+            self.error.emit(f"Camera initialization error: {str(e)}")
+            return False
 
     def run(self):
         if not hasattr(self, 'cap') or not self.cap.isOpened():

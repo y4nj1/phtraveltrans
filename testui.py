@@ -10,6 +10,40 @@ from backend import translate_text, recognize_speech
 import easyocr
 from langdetect import detect, LangDetectException
 import platform
+import RPi.GPIO as GPIO
+
+# GPIO Pin definitions and setup
+class GPIOHandler:
+    def __init__(self):
+        self.TRANSLATE_BTN = 17
+        self.CAMERA_BTN = 27
+        self.SCREEN_BTN = 22
+        self.CUSTOM_BTN = 23
+        self.callbacks = {}
+        self.setup()
+
+    def setup(self):
+        try:
+            GPIO.setmode(GPIO.BCM)
+            for pin in [self.TRANSLATE_BTN, self.CAMERA_BTN, self.SCREEN_BTN, self.CUSTOM_BTN]:
+                GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        except Exception as e:
+            print(f"GPIO Setup Error: {str(e)}")
+
+    def add_callback(self, pin, callback):
+        try:
+            if pin not in self.callbacks:
+                GPIO.add_event_detect(pin, GPIO.FALLING, bouncetime=300)
+                self.callbacks[pin] = callback
+                GPIO.add_event_callback(pin, lambda x: callback())
+        except Exception as e:
+            print(f"GPIO Callback Error for pin {pin}: {str(e)}")
+
+    def cleanup(self):
+        try:
+            GPIO.cleanup()
+        except Exception as e:
+            print(f"GPIO Cleanup Error: {str(e)}")
 
 # Initialize EasyOCR
 reader = easyocr.Reader(['en', 'tl'])
@@ -38,7 +72,7 @@ ilocano_words = {
 }
 
 english_words = {
-    "hello", "hi", "stop", "warning", "danger", "exit", "enter", "welcome",
+    "hello", "hi", "stop", "warning", "danger", "exit", "enter", "welcome", "beware", "go", "home"
     "please", "thank", "thanks", "yes", "no", "help", "open", "close", "ten", "purple", "airfield", "unloading",
     "always", "keep", "right", "left", "maintain", "social", "distancing", "distance", "and", "the",
     "emergency", "caution", "notice", "attention", "warning", "follow", "rules", "safety", "first",
@@ -582,6 +616,14 @@ class ImageTranslateApp(QWidget):
 class MainMenuApp(QWidget):
     def __init__(self):
         super().__init__()
+        self.gpio_handler = GPIOHandler()
+        
+        # Setup GPIO callbacks
+        self.gpio_handler.add_callback(self.gpio_handler.TRANSLATE_BTN, self.openTextTranslate)
+        self.gpio_handler.add_callback(self.gpio_handler.CAMERA_BTN, self.openImageTranslate)
+        self.gpio_handler.add_callback(self.gpio_handler.SCREEN_BTN, self.toggleScreen)
+        self.gpio_handler.add_callback(self.gpio_handler.CUSTOM_BTN, self.openVoiceTranslate)
+        
         self.initUI()
     
     def initUI(self):
@@ -641,10 +683,23 @@ class MainMenuApp(QWidget):
         else:
             # Just show main menu if no text provided
             self.show()
-        
+
+    def toggleScreen(self):
+        # Add screen toggle functionality here if needed
+        pass
+
+    def closeEvent(self, event):
+        self.gpio_handler.cleanup()
+        super().closeEvent(event)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MainMenuApp()
-    ex.show()
-    sys.exit(app.exec_())
+    try:
+        ex = MainMenuApp()
+        ex.show()
+        app.exec_()
+    except Exception as e:
+        print(f"Application Error: {str(e)}")
+    finally:
+        if hasattr(ex, 'gpio_handler'):
+            ex.gpio_handler.cleanup()

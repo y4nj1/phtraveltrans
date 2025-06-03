@@ -5,13 +5,8 @@ import sys
 import cv2
 import os
 import time
-import pytesseract
 from datetime import datetime
 from backend import translate_text, recognize_speech
-<<<<<<< Updated upstream
-
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-=======
 import easyocr
 from langdetect import detect, LangDetectException
 import platform
@@ -49,7 +44,6 @@ class LoadingScreen(QWidget):
 
 # Initialize EasyOCR
 reader = easyocr.Reader(['en', 'tl'])
->>>>>>> Stashed changes
 
 # Language code mapping
 language_code_map = {
@@ -59,8 +53,6 @@ language_code_map = {
     "Ilocano": "ilo"
 }
 
-<<<<<<< Updated upstream
-=======
 # Word-based heuristic for Cebuano and Ilocano detection
 cebuano_words = {
     "maayong", "daghang", "salamat", "tabangan", "wala", "kabalo", "asa", "pasidaan!", "pasidaan",
@@ -150,7 +142,6 @@ def detect_language(text):
         # Default to English for common signs and instructions
         return "en"
 
->>>>>>> Stashed changes
 class TextTranslateApp(QWidget):
     def __init__(self, mainMenuCallback):
         super().__init__()
@@ -180,6 +171,8 @@ class TextTranslateApp(QWidget):
         self.sourceLanguage.setFixedSize(150, 40)
         self.sourceLanguage.setStyleSheet("font-size: 14px;")
         self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
+        self.sourceLanguage.setEditable(True)
+        self.sourceLanguage.setInsertPolicy(QComboBox.NoInsert)  # Prevent user from adding new items
 
         self.targetLanguage = QComboBox(self)
         self.targetLanguage.setFixedSize(150, 40)
@@ -222,21 +215,41 @@ class TextTranslateApp(QWidget):
         super().keyPressEvent(event)
 
     def translateButtonClicked(self):
-        src_lang_name = self.sourceLanguage.currentText()
+        src_lang_name = self.sourceLanguage.currentText().split(" - ")[0]  # Remove "- Detected" if present
         tgt_lang_name = self.targetLanguage.currentText()
 
-        if src_lang_name == "Select Language" or tgt_lang_name == "Select Language":
-            QMessageBox.warning(self, "Error", "Please select valid languages.")
+        if tgt_lang_name == "Select Language":
+            QMessageBox.warning(self, "Error", "Please select a valid target language.")
             return
 
-        src_lang = language_code_map.get(src_lang_name)
         tgt_lang = language_code_map.get(tgt_lang_name)
-
-        if not src_lang or not tgt_lang:
-            QMessageBox.warning(self, "Error", "Invalid language selection.")
+        if not tgt_lang:
+            QMessageBox.warning(self, "Error", "Invalid target language selection.")
             return
 
-        source_text = self.sourceText.toPlainText()
+        source_text = self.sourceText.toPlainText().strip()
+        if not source_text:
+            QMessageBox.warning(self, "Error", "Please enter text to translate.")
+            return
+
+        # Use enhanced language detection
+        detected_lang = detect_language(source_text)
+        if not detected_lang:
+            QMessageBox.warning(self, "Error", "Could not detect the source language.")
+            return
+
+        try:
+            detected_lang_name = next(key for key, value in language_code_map.items() if value == detected_lang)
+            if src_lang_name == "Select Language":
+                # Only show detection if no language was manually selected
+                detected_text = f"{detected_lang_name} - Detected"
+                self.sourceLanguage.setCurrentText(detected_text)  # Show detected text without adding to items
+                src_lang_name = detected_lang_name  # Use the base language name for translation
+            src_lang = detected_lang  # Use detected language code directly
+        except StopIteration:
+            QMessageBox.warning(self, "Error", "Detected language is not supported.")
+            return
+
         translated_text = translate_text(source_text, src_lang, tgt_lang)
         self.targetText.setText(translated_text)
 
@@ -418,31 +431,10 @@ class LiveFeedThread(QThread):
     def __init__(self, parent=None):
         super().__init__(parent)
         self._run_flag = True
+        self.is_rpi = platform.system() == 'Linux' and platform.machine().startswith('arm')
         self.initCamera()
 
     def initCamera(self):
-<<<<<<< Updated upstream
-        # Force DirectShow backend
-        self.cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-        
-        if not self.cap.isOpened():
-            self.error.emit("Camera initialization failed")
-            return False
-
-        # Set properties after successful initialization
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-        self.cap.set(cv2.CAP_PROP_FPS, 30)
-        
-        # Verify initialization
-        ret, _ = self.cap.read()
-        if not ret:
-            self.cap.release()
-            self.error.emit("Camera test frame capture failed")
-            return False
-            
-        return True
-=======
         try:
             if self.is_rpi:
                 self.cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
@@ -470,7 +462,6 @@ class LiveFeedThread(QThread):
             self.error.emit(f"Camera initialization error: {str(e)}")
             return False
 
->>>>>>> Stashed changes
 
     def run(self):
         if not hasattr(self, 'cap') or not self.cap.isOpened():
@@ -625,59 +616,6 @@ class LiveFeedCaptureInterface(QWidget):
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             self.captured_image_path = os.path.join(image_dir, f"{timestamp}.jpg")
-<<<<<<< Updated upstream
-            cv2.imwrite(self.captured_image_path, frame)
-            self.extractText()
-        else:
-            QMessageBox.warning(self, "Error", "Failed to capture image")
-    
-    def extractText(self):
-        img = cv2.imread(self.captured_image_path)
-        if img is None:
-            QMessageBox.warning(self, "Error", "Failed to load captured image")
-            return
-
-        # Enhanced preprocessing pipeline
-        try:
-            # 1. Resize with better detail preservation
-            img = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_LANCZOS4)
-            
-            # 2. Convert to grayscale
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            
-            # 3. Apply bilateral filter for edge preservation
-            denoised = cv2.bilateralFilter(gray, 9, 75, 75)
-            
-            # 4. Enhance contrast using CLAHE
-            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
-            enhanced = clahe.apply(denoised)
-            
-            # 5. Adaptive thresholding with optimized parameters
-            thresh = cv2.adaptiveThreshold(
-                enhanced, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                cv2.THRESH_BINARY, 15, 8
-            )
-            
-            # 6. OCR with improved configuration
-            custom_config = r'--oem 3 --psm 6 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?\ '
-            text = pytesseract.image_to_string(thresh, config=custom_config, lang='eng')
-            
-            # 7. Advanced text cleanup
-            text = ' '.join(filter(None, text.split()))
-            text = text.strip('.,!? \n\t')
-            
-            if not text:
-                QMessageBox.warning(self, "Warning", "No text detected in image")
-                return
-                    
-            self.goToTranslateCallback(text)
-            self.close()
-        
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Image processing failed: {str(e)}")
-            return
-
-=======
             
             if self.picam2:
                 try:
@@ -787,7 +725,6 @@ class LiveFeedCaptureInterface(QWidget):
         self.cleanup()
         super().closeEvent(event)
 
->>>>>>> Stashed changes
 class ImageTranslateApp(QWidget):
     def __init__(self, text, mainMenuCallback):
         super().__init__()
@@ -812,6 +749,8 @@ class ImageTranslateApp(QWidget):
         self.sourceLanguage.setFixedSize(150, 40)
         self.sourceLanguage.setStyleSheet("font-size: 14px;")
         self.sourceLanguage.addItems(["Select Language", "English", "Tagalog", "Cebuano", "Ilocano"])
+        self.sourceLanguage.setEditable(True)
+        self.sourceLanguage.setInsertPolicy(QComboBox.NoInsert)  # Prevent user from adding new items
 
         self.targetLanguage = QComboBox(self)
         self.targetLanguage.setFixedSize(150, 40)
@@ -852,7 +791,7 @@ class ImageTranslateApp(QWidget):
         super().keyPressEvent(event)
 
     def translateButtonClicked(self):
-        src_lang_name = self.sourceLanguage.currentText()
+        src_lang_name = self.sourceLanguage.currentText().split(" - ")[0]  # Remove "- Detected" if present
         tgt_lang_name = self.targetLanguage.currentText()
 
         if src_lang_name == "Select Language" or tgt_lang_name == "Select Language":
@@ -881,8 +820,6 @@ class ImageTranslateApp(QWidget):
 class MainMenuApp(QWidget):
     def __init__(self):
         super().__init__()
-<<<<<<< Updated upstream
-=======
         # Show loading screen first
         self.loading = LoadingScreen()
         self.loading.show()
@@ -891,7 +828,6 @@ class MainMenuApp(QWidget):
         # Initialize main app after loading
         setup_gpio()
         self.setup_gpio_handlers()
->>>>>>> Stashed changes
         self.initUI()
         self.showMaximized()
         
@@ -1028,21 +964,6 @@ class MainMenuApp(QWidget):
         self.LiveFeedApp.show()
         self.hide()  # Hide instead of close
     
-<<<<<<< Updated upstream
-    def showMainMenu(self):
-        self.show()
-
-    def goToTranslateCallback(self, text):
-        self.imageTranslateApp = ImageTranslateApp(text, self.showMainMenu)
-        self.imageTranslateApp.show()
-        self.close()
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = MainMenuApp()
-    ex.show()
-    sys.exit(app.exec_())
-=======
     def goToTranslateCallback(self, text=None):  # Make text parameter optional
         if text:
             self.imageTranslateApp = ImageTranslateApp(text, self.showMainMenu)
@@ -1063,4 +984,3 @@ if __name__ == '__main__':
         app.exec_()
     finally:
         cleanup_gpio()
->>>>>>> Stashed changes

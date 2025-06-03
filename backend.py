@@ -1,4 +1,5 @@
 import speech_recognition as sr
+import re
 from googletrans import Translator
 import mysql.connector
 
@@ -55,8 +56,6 @@ def translate_text(source_text, source_lang, target_lang):
         print(f"Google Translate Error: {e}")
         return source_text
 
-<<<<<<< Updated upstream
-=======
 def normalize_transcription(text, language):
     """Normalize and correct common transcription errors."""
     corrections = {
@@ -365,7 +364,6 @@ def normalize_transcription(text, language):
             text = re.sub(rf'\b{re.escape(incorrect)}\b', correct, text, flags=re.IGNORECASE)
     return text
 
->>>>>>> Stashed changes
 def recognize_speech(source_lang, target_lang):
     """Recognize speech from microphone and translate it."""
     with sr.Microphone() as source:
@@ -377,13 +375,17 @@ def recognize_speech(source_lang, target_lang):
     try:
         # Recognize speech
         recognized_text = recognizer.recognize_google(audio, language=source_lang)
-        print(f"Recognized ({source_lang}): {recognized_text}")
+        print(f"Raw Recognized ({source_lang}): {recognized_text}")
 
-        # Translate recognized text
-        translated_text = translate_text(recognized_text, source_lang, target_lang)
+        # Normalize the transcription for the selected source language
+        normalized_text = normalize_transcription(recognized_text, source_lang)
+        print(f"Normalized ({source_lang}): {normalized_text}")
+
+        # Translate normalized text
+        translated_text = translate_text(normalized_text, source_lang, target_lang)
         print(f"Translated ({target_lang}): {translated_text}")
 
-        return recognized_text, translated_text
+        return normalized_text, translated_text
 
     except sr.UnknownValueError:
         return "", "Could not understand audio."
